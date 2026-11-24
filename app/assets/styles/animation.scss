@@ -1,0 +1,56 @@
+// ============================================================
+// 页面过渡与入场动画
+// ------------------------------------------------------------
+// 页面切换淡入淡出：nuxt.config 的 pageTransition.name = 'page'、mode = 'out-in'。
+// 只做透明度 + 极小位移，不做大位移 / 旋转等夸张效果。
+// 遵循系统「减少动态效果」偏好。
+// ============================================================
+
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity $transition-normal ease,
+    transform $transition-normal ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+// 首屏内容逐项淡入（每个 view 保持单一根节点，nth-child 才能命中）
+@layer components {
+  .page-shell > * > .reveal-item {
+    animation: reveal-in 0.42s ease both;
+  }
+}
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: none;
+  }
+  .page-enter-from,
+  .page-leave-to {
+    transform: none;
+  }
+  .page-shell > * > .reveal-item {
+    animation: none;
+  }
+}

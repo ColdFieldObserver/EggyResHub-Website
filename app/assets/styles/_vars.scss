@@ -1,0 +1,35 @@
+// ============================================================
+// 项目自有设计令牌（Sass 变量文件）
+// ------------------------------------------------------------
+// 由 nuxt.config 的 vite.css.preprocessorOptions.scss.additionalData
+// 注入到每个 SCSS 文件，组件 <style lang="scss"> 可直接使用。
+// 运行时会变的颜色一律不放在这里，改用 Vuetify 主题 CSS 变量
+// （rgb(var(--v-theme-primary)) 等）或 var(--v-*)。
+// ============================================================
+
+// 字体栈（与 settings.scss 保持一致，供手写样式使用）
+$font-ui: 'HarmonyOS Sans SC', 'Microsoft YaHei', sans-serif;
+$font-code: 'Cascadia Code', 'Consolas', monospace;
+
+// 版式尺寸
+$topbar-height: 64px;
+$sidebar-width: 260px;
+$sidebar-width-collapsed: 0px;
+$page-max-width: 1280px;
+$content-max-width: 64rem;
+
+// 卡片网格
+$card-grid-min: 280px;
+$card-gap: 18px;
+
+// 圆角（小范围手写样式用，尽量复用 Vuetify 的 rounded-*）
+$radius-sm: 8px;
+$radius-md: 12px;
+$radius-lg: 20px;
+
+// 断点（Vuetify 默认阶梯，避免自定义像素断点）
+$breakpoint-lg: 1024px;
+
+// 过渡时长（页面淡入淡出 / 侧栏收起）
+$transition-fast: 0.18s;
+$transition-normal: 0.28s;

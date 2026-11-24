@@ -1,0 +1,34 @@
+# Windows 下 isolated 链接布局出现过 Tailwind / Vuetify 传递依赖「只链一半」的问题，
+# 统一用扁平 node_modules 布局，本地与 CI 行为一致。
+nodeLinker: hoisted
+
+# pnpm 默认拦截安装脚本，需要构建二进制的依赖必须显式放行。
+# 注意：@nuxt/content 走 Node 内置 node:sqlite，不需要 better-sqlite3。
+allowBuilds:
+  esbuild: true
+  '@parcel/watcher': true
+  vue-demi: true
+  workerd: true
+
+minimumReleaseAgeExclude:
+  - '@iconify-json/simple-icons@1.2.104'
+  - '@oxlint/binding-android-arm-eabi@1.95.0'
+  - '@oxlint/binding-android-arm64@1.95.0'
+  - '@oxlint/binding-darwin-arm64@1.95.0'
+  - '@oxlint/binding-darwin-x64@1.95.0'
+  - '@oxlint/binding-freebsd-x64@1.95.0'
+  - '@oxlint/binding-linux-arm-gnueabihf@1.95.0'
+  - '@oxlint/binding-linux-arm-musleabihf@1.95.0'
+  - '@oxlint/binding-linux-arm64-gnu@1.95.0'
+  - '@oxlint/binding-linux-arm64-musl@1.95.0'
+  - '@oxlint/binding-linux-ppc64-gnu@1.95.0'
+  - '@oxlint/binding-linux-riscv64-gnu@1.95.0'
+  - '@oxlint/binding-linux-riscv64-musl@1.95.0'
+  - '@oxlint/binding-linux-s390x-gnu@1.95.0'
+  - '@oxlint/binding-linux-x64-gnu@1.95.0'
+  - '@oxlint/binding-linux-x64-musl@1.95.0'
+  - '@oxlint/binding-openharmony-arm64@1.95.0'
+  - '@oxlint/binding-win32-arm64-msvc@1.95.0'
+  - '@oxlint/binding-win32-ia32-msvc@1.95.0'
+  - '@oxlint/binding-win32-x64-msvc@1.95.0'
+  - oxlint@1.95.0

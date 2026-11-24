@@ -1,0 +1,46 @@
+name: Check & Build
+
+# 检查流程：oxlint + tsc + build。与格式流程（prettier.yml）相互独立、同时进行，
+# prettier 不得阻塞本流程。部署由 Cloudflare Workers Builds 在 Git 推送后自动触发。
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: oxlint + tsc + build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: latest
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 前置：生成 .nuxt 类型与别名（改 nuxt.config 后必须重跑）
+      - name: Prepare Nuxt
+        run: pnpm exec nuxi prepare
+
+      - name: oxlint
+        run: pnpm run lint
+
+      - name: tsc
+        run: pnpm run typecheck
+
+      # 构建同时验证预渲染：failOnError 下任何缺页都会让这一步失败
+      - name: Build
+        run: pnpm run build

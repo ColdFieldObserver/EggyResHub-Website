@@ -1,0 +1,15 @@
+{
+  // tsc 类型检查专用配置：只覆盖纯 TS 的共享层与构建期脚本，
+  // Vue SFC / Nuxt 自动导入由 nuxi prepare 生成的 .nuxt 类型负责，
+  // 这里不重复检查 .vue（避免误报自动导入找不到）。
+  "extends": "./.nuxt/tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    // .nuxt/tsconfig.json 里 types: [] 会屏蔽 Node 类型，这里显式补回，
+    // 否则 build/ 与 shared/ 里 import 'node:fs' 这类语句会报 TS2591
+    "types": ["node"]
+  },
+  "include": ["shared/**/*.ts", "build/**/*.ts"],
+  "exclude": ["node_modules", ".nuxt", ".output", "dist"]
+}

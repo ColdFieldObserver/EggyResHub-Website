@@ -1,0 +1,127 @@
+// ============================================================
+// 蛋仔资源站 · 全局样式入口
+// ------------------------------------------------------------
+// 1) Vuetify 的组件样式由 vuetify-nuxt-module 注入（settings.scss 变量生效）。
+// 2) 本项目手写样式只处理 Vuetify 组件表达不了的部分，并统一包进
+//    @layer components：未分层规则会压过 Vuetify 工具类，导致 py-* / ma-* 失效。
+// 3) 深色只写 `.dark` 一条：useSiteTheme 与首帧内联脚本保证「手动深色」与
+//    「auto + 系统深色」都会落到 <html class="dark">，无需第二份选择器。
+// 4) 颜色尽量走 Vuetify 运行时主题变量（rgb(var(--v-theme-*))），
+//    静态令牌（尺寸/字体/圆角）走 _vars.scss 的 Sass 变量。
+// ============================================================
+// 注意：_vars.scss 已由 nuxt.config 的 additionalData 注入到每个 scss 文件，
+// 这里不要再写 `@use 'vars' as *;`，否则同一模块被重复加载会编译报错。
+
+@layer components {
+  html {
+    scroll-behavior: smooth;
+    // 吸顶顶栏高度：所有 scroll-margin / sticky top 都引用这个变量
+    --shell-header-h: #{$topbar-height};
+    scroll-padding-top: calc(var(--shell-header-h) + 20px);
+  }
+
+  body {
+    font-family: $font-ui;
+    // 交给浏览器自然滚动，不自建滚动容器（否则 sticky 顶栏失效）
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  // 首帧防闪：深色模式在 Vuetify 接管前先压住背景
+  html.dark body {
+    background: #121316;
+  }
+
+  code,
+  kbd,
+  pre,
+  .font-code {
+    font-family: $font-code;
+  }
+
+  ::selection {
+    background: rgb(var(--v-theme-primary) / 0.28);
+  }
+
+  // 页面容器：单一根节点，配合入场动画与统一最大宽度
+  .page-shell {
+    max-width: $page-max-width;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
+  }
+
+  .section-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 32px 0 16px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: rgb(var(--v-theme-on-surface));
+  }
+
+  .muted-text {
+    color: rgb(var(--v-theme-on-surface) / 0.62);
+  }
+
+  // 手写卡片外观：封面通栏 + 信息区，描边分层，hover 只加阴影（不做大位移/旋转）
+  .resource-card {
+    overflow: hidden;
+    border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    border-radius: $radius-md;
+    transition: box-shadow $transition-normal ease;
+
+    &:hover {
+      box-shadow: 0 8px 28px rgb(0 0 0 / 0.12);
+    }
+  }
+
+  html.dark .resource-card:hover {
+    box-shadow: 0 8px 28px rgb(0 0 0 / 0.4);
+  }
+
+  .resource-card__cover {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: rgb(var(--v-theme-surface-variant));
+  }
+
+  .resource-card__title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: rgb(var(--v-theme-on-surface));
+  }
+
+  .resource-card__meta {
+    font-size: 0.8rem;
+    color: rgb(var(--v-theme-on-surface) / 0.6);
+  }
+
+  .resource-card__desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: rgb(var(--v-theme-on-surface) / 0.72);
+  }
+
+  // 通用网格（卡片列数由 CSS 变量统一接管，不在调用点另写）
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, #{$card-grid-min}), 1fr));
+    gap: $card-gap;
+  }
+
+  // 友情链接 / 社区推广：一行最多 4 项
+  .link-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+    gap: $card-gap;
+  }
+
+  // 无 JS 降级
+  html:not(.js) .js-only {
+    display: none !important;
+  }
+}

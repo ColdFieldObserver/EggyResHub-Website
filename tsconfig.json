@@ -1,0 +1,4 @@
+{
+  // Nuxt 生成的 tsconfig 包含 app / server / shared 三套别名与自动导入声明
+  "extends": "./.nuxt/tsconfig.json"
+}

@@ -1,0 +1,411 @@
+// ============================================================
+// 资源详情 + Markdown 正文排版
+// ------------------------------------------------------------
+// 为什么是全局文件而不是组件 scoped：正文由 <ContentRenderer> 渲染，
+// 其 DOM 不带组件 data-v 标记，scoped 选择器命中不了（除非全量 :deep）。
+//
+// 全部包进 @layer components：这样 Vuetify 的工具类仍能覆盖正文元素
+// （未分层规则会压死工具类）。深色只写 `.dark` 一条。
+// 颜色统一走 Vuetify 运行时主题变量 rgb(var(--v-theme-*))。
+// ============================================================
+
+@layer components {
+  .post-view {
+    max-width: $content-max-width;
+    margin: 0 auto;
+  }
+
+  .post-content {
+    font-size: 16px;
+    line-height: 1.85;
+    color: rgb(var(--v-theme-on-surface) / 0.86);
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .post-content > :first-child {
+    margin-top: 0;
+  }
+  .post-content > :last-child {
+    margin-bottom: 0;
+  }
+
+  // ---- 标题（6 级共用盒模型，仅改字号）----
+  .post-content :is(h1, h2, h3, h4, h5, h6) {
+    position: relative;
+    margin: 1.6em 0 0.7em;
+    font-weight: 700;
+    line-height: 1.4;
+    color: rgb(var(--v-theme-on-surface));
+    scroll-margin-top: calc(var(--shell-header-h) + 20px);
+  }
+  .post-content h1 {
+    font-size: 1.7em;
+  }
+  .post-content h2 {
+    padding-bottom: 0.35em;
+    font-size: 1.35em;
+    border-bottom: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+  }
+  .post-content h3 {
+    font-size: 1.15em;
+  }
+  .post-content h4 {
+    font-size: 1.02em;
+  }
+  .post-content h5 {
+    font-size: 0.95em;
+  }
+  .post-content h6 {
+    font-size: 0.9em;
+  }
+
+  // 标题 hover 锚点图标（内联 SVG mask，不依赖图标字体）
+  .post-content :is(h1, h2, h3, h4, h5, h6) .header-anchor {
+    position: absolute;
+    top: 0;
+    left: -0.9em;
+    color: rgb(var(--v-theme-primary));
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .post-content :is(h1, h2, h3, h4, h5, h6) .header-anchor::before {
+    content: '';
+    display: block;
+    width: 0.8em;
+    height: 0.8em;
+    background-color: currentColor;
+    -webkit-mask: var(--icon-link) center / contain no-repeat;
+    mask: var(--icon-link) center / contain no-repeat;
+  }
+  .post-content :is(h1, h2, h3, h4, h5, h6):hover .header-anchor,
+  .post-content :is(h1, h2, h3, h4, h5, h6) .header-anchor:focus-visible {
+    opacity: 1;
+  }
+
+  // ---- 文本 ----
+  .post-content p {
+    margin: 0.85em 0;
+  }
+  .post-content a {
+    color: rgb(var(--v-theme-primary));
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .post-content a:hover {
+    opacity: 0.85;
+  }
+  .post-content strong {
+    font-weight: 700;
+    color: rgb(var(--v-theme-on-surface));
+  }
+  .post-content del {
+    color: rgb(var(--v-theme-on-surface) / 0.5);
+  }
+  .post-content mark {
+    padding: 0.05em 0.28em;
+    color: rgb(var(--v-theme-on-surface));
+    background: rgb(var(--v-theme-primary) / 0.35);
+    border-radius: 3px;
+  }
+  .post-content :is(sub, sup) {
+    font-size: 0.75em;
+    line-height: 0;
+  }
+  .post-content kbd {
+    display: inline-block;
+    padding: 0.1em 0.5em;
+    font-family: $font-code;
+    font-size: 0.82em;
+    line-height: 1.6;
+    color: rgb(var(--v-theme-on-surface));
+    background: rgb(var(--v-theme-surface-variant));
+    border: 1px solid rgb(var(--v-theme-on-surface) / 0.16);
+    border-bottom-width: 2px;
+    border-radius: $radius-sm;
+  }
+
+  // ---- 列表 ----
+  .post-content ul,
+  .post-content ol {
+    margin: 0.7em 0 1em 1.5em;
+  }
+  .post-content ul {
+    list-style: disc;
+  }
+  .post-content ol {
+    list-style: decimal;
+  }
+  .post-content li {
+    margin: 0.3em 0;
+  }
+  .post-content li::marker {
+    color: rgb(var(--v-theme-primary));
+  }
+  .post-content li > :is(ul, ol) {
+    margin: 0.25em 0 0.25em 1.2em;
+  }
+
+  // ---- 任务列表 ----
+  .post-content .task-list-item {
+    list-style: none;
+  }
+  .post-content .task-list-item > input[type='checkbox'] {
+    width: 1em;
+    height: 1em;
+    margin: 0 0.5em 0 0;
+    vertical-align: -0.12em;
+    accent-color: rgb(var(--v-theme-primary));
+    cursor: default;
+  }
+  .post-content ul.contains-task-list {
+    margin-left: 1.6em;
+  }
+
+  // ---- 定义列表 ----
+  .post-content dl {
+    margin: 1em 0;
+  }
+  .post-content dt {
+    margin-top: 0.7em;
+    font-weight: 600;
+    color: rgb(var(--v-theme-on-surface));
+  }
+  .post-content dd {
+    margin: 0.15em 0 0 1.1em;
+    padding-left: 0.8em;
+    color: rgb(var(--v-theme-on-surface) / 0.7);
+    border-left: 2px solid rgb(var(--v-theme-primary) / 0.5);
+  }
+
+  // ---- 引用 ----
+  .post-content blockquote {
+    margin: 1.1em 0;
+    padding: 0.7em 1.1em;
+    color: rgb(var(--v-theme-on-surface) / 0.75);
+    background: rgb(var(--v-theme-primary) / 0.06);
+    border-left: 3px solid rgb(var(--v-theme-primary));
+    border-radius: 0 $radius-md $radius-md 0;
+  }
+  .post-content blockquote > :first-child {
+    margin-top: 0;
+  }
+  .post-content blockquote > :last-child {
+    margin-bottom: 0;
+  }
+
+  // ---- 分隔线 ----
+  .post-content hr {
+    margin: 2em 0;
+    border: none;
+    border-top: 1px solid rgb(var(--v-theme-on-surface) / 0.14);
+  }
+
+  // ---- 行内代码 ----
+  .post-content code {
+    padding: 0.15em 0.42em;
+    font-family: $font-code;
+    font-size: 0.9em;
+    background: rgb(var(--v-theme-surface-variant));
+    border-radius: 6px;
+  }
+
+  // ---- 代码块（ProsePre 输出 div.language-xxx > .code-head + pre.shiki）----
+  .post-content div[class*='language-'] {
+    position: relative;
+    margin: 1.2em 0;
+    // 不能 overflow:hidden：会让本元素成为滚动容器，内部 sticky 信息栏被困住
+    background: rgb(var(--v-theme-surface-variant));
+    border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    border-radius: $radius-md;
+  }
+  .post-content div[class*='language-'] > .code-head {
+    position: sticky;
+    top: var(--shell-header-h);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 12px;
+    background: rgb(var(--v-theme-surface));
+    border-bottom: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    border-radius: $radius-md $radius-md 0 0;
+  }
+  .post-content div[class*='language-'] > .code-head > .lang {
+    font-family: $font-code;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: rgb(var(--v-theme-primary));
+    user-select: none;
+    pointer-events: none;
+  }
+  .post-content div[class*='language-'] > .code-head > .lang:empty {
+    display: none;
+  }
+  .post-content div[class*='language-'] > .code-head > .lang:empty + .copy {
+    margin-left: auto;
+  }
+  .post-content div[class*='language-'] > .code-head > .copy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    color: rgb(var(--v-theme-on-surface) / 0.55);
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: $radius-sm;
+    cursor: pointer;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .post-content div[class*='language-'] > .code-head > .copy::before {
+    content: '';
+    display: block;
+    width: 15px;
+    height: 15px;
+    background-color: currentColor;
+    -webkit-mask: var(--icon-copy) center / contain no-repeat;
+    mask: var(--icon-copy) center / contain no-repeat;
+  }
+  .post-content div[class*='language-'] > .code-head > .copy:hover {
+    color: rgb(var(--v-theme-primary));
+    border-color: rgb(var(--v-theme-on-surface) / 0.14);
+  }
+  .post-content div[class*='language-'] > .code-head > .copy.copied::before {
+    -webkit-mask-image: var(--icon-check);
+    mask-image: var(--icon-check);
+  }
+  .post-content div[class*='language-'] pre {
+    margin: 0;
+    padding: 14px 16px;
+    overflow-x: auto;
+    background: transparent;
+    border-radius: 0 0 $radius-md $radius-md;
+  }
+  .post-content div[class*='language-'] code {
+    padding: 0;
+    font-size: 0.86em;
+    line-height: 1.7;
+    color: inherit;
+    background: none;
+    border-radius: 0;
+  }
+  .post-content div[class*='language-'] code .line {
+    display: block;
+  }
+
+  // Shiki 双主题 token 上色
+  .post-content .shiki span {
+    color: var(--shiki-light, inherit);
+  }
+  html.dark .post-content .shiki span {
+    color: var(--shiki-dark, inherit);
+  }
+
+  // ---- 表格（保持 table 语义，横向溢出交外层滚动容器）----
+  .post-content .table-scroll {
+    margin: 1.2em 0;
+    overflow-x: auto;
+    border-radius: $radius-md;
+  }
+  .post-content table {
+    display: table;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+  .post-content table :is(th, td) {
+    padding: 9px 14px;
+    text-align: left;
+    border: 1px solid rgb(var(--v-theme-on-surface) / 0.14);
+  }
+  .post-content table thead th {
+    font-weight: 600;
+    color: rgb(var(--v-theme-on-surface));
+    background: rgb(var(--v-theme-surface-variant));
+  }
+  .post-content table tbody tr:nth-child(2n) {
+    background: rgb(var(--v-theme-on-surface) / 0.04);
+  }
+
+  // ---- 图片 ----
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+    border-radius: $radius-md;
+  }
+  .post-content :is(img:not([src]), img[src='']) {
+    display: none;
+  }
+
+  // ---- <details> 折叠 ----
+  .post-content details {
+    margin: 1em 0;
+    padding: 0.8em 1em;
+    background: rgb(var(--v-theme-surface-variant));
+    border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    border-radius: $radius-md;
+  }
+  .post-content details summary {
+    font-weight: 600;
+    color: rgb(var(--v-theme-on-surface));
+    cursor: pointer;
+  }
+  .post-content details summary::marker {
+    color: rgb(var(--v-theme-primary));
+  }
+  .post-content details[open] summary {
+    margin-bottom: 0.6em;
+  }
+
+  // ---- 脚注 ----
+  .post-content .footnote-ref {
+    margin-left: 2px;
+    font-size: 0.75em;
+  }
+  .post-content .footnote-ref a {
+    padding: 0 0.3em;
+    color: rgb(var(--v-theme-primary));
+    text-decoration: none;
+    background: rgb(var(--v-theme-surface-variant));
+    border-radius: 4px;
+  }
+  .post-content .footnotes {
+    margin-top: 1.4em;
+    font-size: 0.92em;
+    color: rgb(var(--v-theme-on-surface) / 0.6);
+  }
+  .post-content .footnotes .footnotes-list {
+    margin-left: 1.4em;
+  }
+  .post-content hr.footnotes-sep {
+    margin-top: 2em;
+  }
+
+  // ---- 数学公式（KaTeX，构建期由 rehype-katex 渲染）----
+  .post-content .katex-display {
+    margin: 1.2em 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.4em 0;
+  }
+  .post-content .katex {
+    font-size: 1.05em;
+  }
+
+  // 图标 mask（内联 SVG data URI，避免依赖图标字体 / CDN）
+  :root {
+    --icon-link: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/%3E%3C/svg%3E");
+    --icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E");
+    --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  }
+}

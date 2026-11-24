@@ -1,0 +1,15 @@
+# 依赖与产物
+node_modules/
+.nuxt/
+.output/
+.data/
+.wrangler/
+dist/
+pnpm-lock.yaml
+
+# 内容：MDC 组件、KaTeX 公式与中文长句经不起换行重排
+content/
+public/
+
+# 生成的静态 JSON / 字体 / 地图
+*.lock

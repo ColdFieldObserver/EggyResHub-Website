@@ -1,0 +1,22 @@
+// ============================================================
+// Vuetify 4 Sass 变量配置（由 vuetify-nuxt-module 的
+// vuetify.vuetifyOptions.styles.configFile 注入）
+// ------------------------------------------------------------
+// 该文件是 Sass 编译期变量入口，只放「静态令牌」：
+// 字体栈、圆角、字号、边框、组件尺寸等。
+// 颜色 / 深色切换属于运行时主题（useTheme + v-theme--*），不在这里写。
+// @use 必须带 with (...) 覆盖 Vuetify 的 !default 变量，
+// 且必须排在首次使用 Vuetify 样式之前（由 unplugin-styles 保证）。
+// ============================================================
+@use 'vuetify/settings' with (
+    // 正文字体：HarmonyOS Sans SC（构建期灌注），等宽回退用 Cascadia Code
+    $body-font-family: 'HarmonyOS Sans SC',
+    'Cascadia Code',
+    'Microsoft YaHei',
+    sans-serif,
+    $font-size-root: 16px,
+    $line-height-root: 1.6,
+    $border-radius-root: 12px,
+    $color-pack: false,
+    $reset: true
+  );
