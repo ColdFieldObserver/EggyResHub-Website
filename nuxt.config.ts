@@ -201,6 +201,7 @@ export default defineNuxtConfig({
         'mdi:text-box-outline',
         'mdi:open-in-new',
         'mdi:arrow-right',
+        'mdi:arrow-up',
         'mdi:lightbulb-outline',
         'mdi:palette-outline',
         'mdi:tools',

@@ -125,6 +125,9 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
       <NuxtPage />
     </VMain>
 
+    <!-- 右下角返回顶部（滚动超过阈值才出现） -->
+    <BackToTop />
+
     <!-- 全局对话框 -->
     <SearchDialog />
     <AboutDialog ref="aboutRef" />
