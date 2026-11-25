@@ -18,7 +18,7 @@
   .post-content {
     font-size: 16px;
     line-height: 1.85;
-    color: rgb(var(--v-theme-on-surface) / 0.86);
+    color: rgba(var(--v-theme-on-surface), 0.86);
     overflow-wrap: break-word;
     word-break: break-word;
   }
@@ -45,7 +45,7 @@
   .post-content h2 {
     padding-bottom: 0.35em;
     font-size: 1.35em;
-    border-bottom: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
   }
   .post-content h3 {
     font-size: 1.15em;
@@ -101,12 +101,12 @@
     color: rgb(var(--v-theme-on-surface));
   }
   .post-content del {
-    color: rgb(var(--v-theme-on-surface) / 0.5);
+    color: rgba(var(--v-theme-on-surface), 0.5);
   }
   .post-content mark {
     padding: 0.05em 0.28em;
     color: rgb(var(--v-theme-on-surface));
-    background: rgb(var(--v-theme-primary) / 0.35);
+    background: rgba(var(--v-theme-primary), 0.35);
     border-radius: 3px;
   }
   .post-content :is(sub, sup) {
@@ -120,8 +120,8 @@
     font-size: 0.82em;
     line-height: 1.6;
     color: rgb(var(--v-theme-on-surface));
-    background: rgb(var(--v-theme-surface-variant));
-    border: 1px solid rgb(var(--v-theme-on-surface) / 0.16);
+    background: rgba(var(--v-theme-on-surface), 0.06);
+    border: 1px solid rgba(var(--v-theme-on-surface), 0.16);
     border-bottom-width: 2px;
     border-radius: $radius-sm;
   }
@@ -175,16 +175,16 @@
   .post-content dd {
     margin: 0.15em 0 0 1.1em;
     padding-left: 0.8em;
-    color: rgb(var(--v-theme-on-surface) / 0.7);
-    border-left: 2px solid rgb(var(--v-theme-primary) / 0.5);
+    color: rgba(var(--v-theme-on-surface), 0.7);
+    border-left: 2px solid rgba(var(--v-theme-primary), 0.5);
   }
 
   // ---- 引用 ----
   .post-content blockquote {
     margin: 1.1em 0;
     padding: 0.7em 1.1em;
-    color: rgb(var(--v-theme-on-surface) / 0.75);
-    background: rgb(var(--v-theme-primary) / 0.06);
+    color: rgba(var(--v-theme-on-surface), 0.75);
+    background: rgba(var(--v-theme-primary), 0.06);
     border-left: 3px solid rgb(var(--v-theme-primary));
     border-radius: 0 $radius-md $radius-md 0;
   }
@@ -199,7 +199,7 @@
   .post-content hr {
     margin: 2em 0;
     border: none;
-    border-top: 1px solid rgb(var(--v-theme-on-surface) / 0.14);
+    border-top: 1px solid rgba(var(--v-theme-on-surface), 0.14);
   }
 
   // ---- 行内代码 ----
@@ -207,7 +207,7 @@
     padding: 0.15em 0.42em;
     font-family: $font-code;
     font-size: 0.9em;
-    background: rgb(var(--v-theme-surface-variant));
+    background: rgba(var(--v-theme-on-surface), 0.06);
     border-radius: 6px;
   }
 
@@ -216,8 +216,8 @@
     position: relative;
     margin: 1.2em 0;
     // 不能 overflow:hidden：会让本元素成为滚动容器，内部 sticky 信息栏被困住
-    background: rgb(var(--v-theme-surface-variant));
-    border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    background: rgb(var(--v-theme-surface));
+    border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
     border-radius: $radius-md;
   }
   .post-content div[class*='language-'] > .code-head {
@@ -230,7 +230,7 @@
     gap: 12px;
     padding: 6px 12px;
     background: rgb(var(--v-theme-surface));
-    border-bottom: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
     border-radius: $radius-md $radius-md 0 0;
   }
   .post-content div[class*='language-'] > .code-head > .lang {
@@ -248,40 +248,6 @@
   }
   .post-content div[class*='language-'] > .code-head > .lang:empty + .copy {
     margin-left: auto;
-  }
-  .post-content div[class*='language-'] > .code-head > .copy {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    color: rgb(var(--v-theme-on-surface) / 0.55);
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: $radius-sm;
-    cursor: pointer;
-    transition:
-      color 0.2s ease,
-      background-color 0.2s ease,
-      border-color 0.2s ease;
-  }
-  .post-content div[class*='language-'] > .code-head > .copy::before {
-    content: '';
-    display: block;
-    width: 15px;
-    height: 15px;
-    background-color: currentColor;
-    -webkit-mask: var(--icon-copy) center / contain no-repeat;
-    mask: var(--icon-copy) center / contain no-repeat;
-  }
-  .post-content div[class*='language-'] > .code-head > .copy:hover {
-    color: rgb(var(--v-theme-primary));
-    border-color: rgb(var(--v-theme-on-surface) / 0.14);
-  }
-  .post-content div[class*='language-'] > .code-head > .copy.copied::before {
-    -webkit-mask-image: var(--icon-check);
-    mask-image: var(--icon-check);
   }
   .post-content div[class*='language-'] pre {
     margin: 0;
@@ -325,15 +291,15 @@
   .post-content table :is(th, td) {
     padding: 9px 14px;
     text-align: left;
-    border: 1px solid rgb(var(--v-theme-on-surface) / 0.14);
+    border: 1px solid rgba(var(--v-theme-on-surface), 0.14);
   }
   .post-content table thead th {
     font-weight: 600;
     color: rgb(var(--v-theme-on-surface));
-    background: rgb(var(--v-theme-surface-variant));
+    background: rgba(var(--v-theme-on-surface), 0.06);
   }
   .post-content table tbody tr:nth-child(2n) {
-    background: rgb(var(--v-theme-on-surface) / 0.04);
+    background: rgba(var(--v-theme-on-surface), 0.04);
   }
 
   // ---- 图片 ----
@@ -351,8 +317,8 @@
   .post-content details {
     margin: 1em 0;
     padding: 0.8em 1em;
-    background: rgb(var(--v-theme-surface-variant));
-    border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    background: rgba(var(--v-theme-on-surface), 0.04);
+    border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
     border-radius: $radius-md;
   }
   .post-content details summary {
@@ -376,13 +342,13 @@
     padding: 0 0.3em;
     color: rgb(var(--v-theme-primary));
     text-decoration: none;
-    background: rgb(var(--v-theme-surface-variant));
+    background: rgba(var(--v-theme-on-surface), 0.06);
     border-radius: 4px;
   }
   .post-content .footnotes {
     margin-top: 1.4em;
     font-size: 0.92em;
-    color: rgb(var(--v-theme-on-surface) / 0.6);
+    color: rgba(var(--v-theme-on-surface), 0.6);
   }
   .post-content .footnotes .footnotes-list {
     margin-left: 1.4em;
@@ -405,7 +371,5 @@
   // 图标 mask（内联 SVG data URI，避免依赖图标字体 / CDN）
   :root {
     --icon-link: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/%3E%3C/svg%3E");
-    --icon-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E");
-    --icon-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
   }
 }

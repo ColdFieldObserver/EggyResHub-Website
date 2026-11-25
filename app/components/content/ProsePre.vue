@@ -2,7 +2,7 @@
 // ============================================================
 // 自定义 ProsePre：代码块顶部信息栏 + 复制按钮
 //   <div class="code-block language-x">
-//     <div class="code-head"><span class="lang">x</span><button class="copy" /></div>
+//     <div class="code-head"><span class="lang">x</span><VBtn class="copy" /></div>
 //     <pre class="shiki">…</pre>
 //   </div>
 // 保留 .copy 与 div[class*="language-"] 外层，复制逻辑按这两个契约名定位。
@@ -53,14 +53,18 @@ async function onCopy(event: MouseEvent): Promise<void> {
   <div :class="['code-block', `language-${lang || 'text'}`]">
     <div class="code-head">
       <span class="lang">{{ langLabel }}</span>
-      <button
+      <VBtn
         class="copy"
-        :class="{ copied }"
-        type="button"
-        title="复制代码"
-        aria-label="复制代码"
-        @click="(e) => onCopy(e)"
-      />
+        variant="text"
+        density="compact"
+        icon
+        :title="copied ? '已复制代码' : '复制代码'"
+        :aria-label="copied ? '已复制代码' : '复制代码'"
+        :color="copied ? 'success' : 'primary'"
+        @click="onCopy"
+      >
+        <Icon :name="copied ? 'mdi:check' : 'mdi:content-copy'" size="16" aria-hidden="true" />
+      </VBtn>
     </div>
     <pre :class="props.class"><slot /></pre>
   </div>
