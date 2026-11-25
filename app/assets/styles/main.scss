@@ -39,8 +39,12 @@
     font-family: $font-code;
   }
 
+  // 正文选区：品牌黄半透明（浓度对齐 PidanUI 官网 35%）。
+  // Vuetify 的主题变量是逗号分隔三元组（如 255,159,26），必须用 rgba(var(...), a)
+  // 全逗号写法；`rgb(var(...) / a)` 是空格语法，与逗号变量混用会变成无效 CSS，
+  // 导致选区无底色。
   ::selection {
-    background: rgb(var(--v-theme-primary) / 0.28);
+    background: rgba(var(--v-theme-primary), 0.35);
   }
 
   // 页面容器：单一根节点，配合入场动画与统一最大宽度
