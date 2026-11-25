@@ -13,8 +13,5 @@ const source = () => pinnedFirst(all.value);
     :page="1"
     base-path="/resources"
   >
-    <template #footer>
-      <GiscusComments />
-    </template>
   </ResourceListView>
 </template>
