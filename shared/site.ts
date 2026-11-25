@@ -20,7 +20,7 @@ export const SITE = {
 export const PAGE_SIZE = 24;
 
 /** 首页「最新资源」列表条数 */
-export const LATEST_COUNT = 8;
+export const LATEST_COUNT = 10;
 
 /** localStorage 存储的主题模式 key（须与首帧内联脚本、useTheme 保持一致） */
 export const THEME_STORAGE_KEY = 'eggyreshub-theme';
