@@ -66,9 +66,9 @@ onBeforeUnmount(() => {
 
       <VBtn
         v-if="count > 1"
+        icon
         variant="text"
         density="comfortable"
-        size="small"
         class="featured__arrow featured__arrow--left"
         aria-label="上一张"
         @click="go(-1)"
@@ -77,9 +77,9 @@ onBeforeUnmount(() => {
       </VBtn>
       <VBtn
         v-if="count > 1"
+        icon
         variant="text"
         density="comfortable"
-        size="small"
         class="featured__arrow featured__arrow--right"
         aria-label="下一张"
         @click="go(1)"

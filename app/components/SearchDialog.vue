@@ -89,7 +89,13 @@ function onResultClick(event: MouseEvent): void {
     <VCard rounded="lg">
       <VCardTitle class="d-flex align-center justify-space-between pa-5 pb-2">
         <span class="text-h6">搜索资源</span>
-        <VBtn variant="text" density="comfortable" aria-label="关闭搜索" @click="closeSearchDialog">
+        <VBtn
+          icon
+          variant="text"
+          density="comfortable"
+          aria-label="关闭搜索"
+          @click="closeSearchDialog"
+        >
           <Icon name="mdi:close" size="20" aria-hidden="true" />
         </VBtn>
       </VCardTitle>

@@ -50,6 +50,7 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
     <!-- 顶栏 -->
     <VAppBar flat :height="64" class="app-topbar" color="surface">
       <VBtn
+        icon
         variant="text"
         density="comfortable"
         class="app-topbar__menu app-topbar__btn"

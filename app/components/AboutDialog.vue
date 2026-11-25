@@ -13,7 +13,7 @@ defineExpose({ open: () => (open.value = true) });
     <VCard rounded="lg">
       <VCardTitle class="d-flex align-center justify-space-between pa-5 pb-2">
         <span class="text-h6">关于{{ SITE.brand }}</span>
-        <VBtn variant="text" density="comfortable" aria-label="关闭" @click="open = false">
+        <VBtn icon variant="text" density="comfortable" aria-label="关闭" @click="open = false">
           <Icon name="mdi:close" size="20" aria-hidden="true" />
         </VBtn>
       </VCardTitle>
