@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useAllResources, useSections, collectTerms } from '~/composables/useResources';
+import { useAllResources, collectTerms } from '~/composables/useResources';
 
 const all = useAllResources();
-const sections = useSections();
 const terms = computed(() => collectTerms('categories', all.value));
 </script>
 
@@ -11,37 +10,10 @@ const terms = computed(() => collectTerms('categories', all.value));
   <div class="page-shell">
     <header class="reveal-item">
       <h1 class="text-h4 font-weight-bold mb-1">资源分类</h1>
-      <p class="muted-text text-body-2">
-        共 {{ terms.length }} 个分类 · {{ sections.length }} 个分区
-      </p>
+      <p class="muted-text text-body-2">共 {{ terms.length }} 个分类</p>
     </header>
 
-    <!-- 分区（已并入分类体系）：按 .categorynav.yml 的 order 排列 -->
-    <template v-if="sections.length">
-      <h2 class="section-heading reveal-item">
-        <Icon name="mdi:folder-multiple-outline" size="24" aria-hidden="true" />
-        资源分区
-      </h2>
-      <div class="term-grid reveal-item">
-        <VCard
-          v-for="section in sections"
-          :key="section.slug"
-          :to="`/categories/${section.slug}`"
-          link
-          ripple
-          variant="outlined"
-          class="term-card"
-        >
-          <div class="term-card__inner">
-            <Icon name="mdi:folder-multiple-outline" size="26" aria-hidden="true" />
-            <span class="term-card__name">{{ section.title }}</span>
-            <span class="term-card__count">{{ section.count }} 个资源</span>
-          </div>
-        </VCard>
-      </div>
-    </template>
-
-    <!-- 标签页 frontmatter 里的分类 -->
+    <!-- 分类完全来自资源 frontmatter 的 categories 字段 -->
     <h2 class="section-heading reveal-item">
       <Icon name="mdi:tag-multiple-outline" size="24" aria-hidden="true" />
       全部标签分类
@@ -63,7 +35,7 @@ const terms = computed(() => collectTerms('categories', all.value));
         </div>
       </VCard>
     </div>
-    <p v-if="!terms.length && !sections.length" class="muted-text mt-6">暂无分类。</p>
+    <p v-if="!terms.length" class="muted-text mt-6">暂无分类。</p>
   </div>
 </template>
 

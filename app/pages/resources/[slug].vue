@@ -12,9 +12,7 @@ const posts = useAllResources();
 const requestFetch = useRequestFetch();
 
 const { data: doc } = await useAsyncData(`resource:${route.path}`, () =>
-  requestFetch<Record<string, unknown>>(
-    `/api/resources/${route.params.section}/${route.params.slug}/index.json`,
-  ),
+  requestFetch<Record<string, unknown>>(`/api/resources/${route.params.slug}/index.json`),
 );
 
 if (!doc.value) {

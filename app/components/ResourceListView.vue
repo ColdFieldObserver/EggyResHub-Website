@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { useAllResources, usePagedResources } from '~/composables/useResources';
 import type { Resource } from '#shared/types/resource';
 
-// 复用同一套卡片机制：全部资源 / 分类 / 标签 / 分区 / 搜索结果都走这里。
+// 复用同一套卡片机制：全部资源 / 分类 / 标签 / 搜索结果都走这里。
 const props = withDefaults(
   defineProps<{
     title: string;

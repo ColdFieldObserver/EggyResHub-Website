@@ -9,7 +9,7 @@ import { SITE, THEME_STORAGE_KEY } from './shared/site';
 // 蛋仔资源站 · Nuxt 站点配置
 //   - 纯静态站点：`nuxi generate` 产出 .output/public，
 //     以 assets-only Worker 的形式部署到 Cloudflare Workers
-//   - 内容由 @nuxt/content v3 驱动（content/<section>/*.md）
+//   - 内容由 @nuxt/content v3 驱动（content/ 下任意层级的 *.md）
 //   - 样式层为 Vuetify 4（Sass 变量经 vuetify-nuxt-module 注入）+ 少量手写 SCSS
 //   - 主题三态由自建 useSiteTheme 独占（data-theme + .dark/.light 双写）
 // ============================================================

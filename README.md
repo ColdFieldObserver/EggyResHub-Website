@@ -35,7 +35,7 @@ pnpm preview        # wrangler dev，按 Cloudflare 规则验收同一份产物
 
 ## 内容编写
 
-资源文档放在 `content/<section>/<slug>.md`，frontmatter：
+资源文档放在 `content/` 下任意层级（例如 `content/wallpapers/foo.md`），文件夹只是存放方式，不参与分类。分类与标签完全由 frontmatter 决定，详情页统一为 `/resources/<slug>`。frontmatter：
 
 ```yaml
 ---
@@ -47,14 +47,6 @@ description: 资源描述
 stickypost: false
 cover: /images/xxx.webp # 可选，缺省退化为 public/images/default-cover.webp
 ---
-```
-
-每个分区放一个 `.categorynav.yml`：
-
-```yaml
-title: 分区标题
-description: 分区描述
-order: 1
 ```
 
 **新增页面或资源后**：`build/content-index.ts` 会在构建期自动扫描并登记预渲染路由，无需手动改路由表；但新增「页面类型」时要同步 `buildRoutes()`。

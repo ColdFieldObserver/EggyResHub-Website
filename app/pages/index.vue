@@ -32,17 +32,25 @@ const sticky = computed(() => stickyResources(all.value));
             <Icon name="mdi:text-box-outline" size="20" aria-hidden="true" />
             最新资源
           </h2>
-          <NuxtLink
-            v-for="resource in latest"
-            :key="resource.path"
-            :to="resource.path"
-            class="home-latest__item"
+          <div class="home-latest__scroll">
+            <NuxtLink
+              v-for="resource in latest"
+              :key="resource.path"
+              :to="resource.path"
+              class="home-latest__item"
+            >
+              <span class="home-latest__title">{{ resource.title }}</span>
+              <span class="home-latest__date">{{ resource.displayDate }}</span>
+            </NuxtLink>
+            <p v-if="!latest.length" class="muted-text text-body-2">暂无资源</p>
+          </div>
+          <VBtn
+            to="/resources/"
+            variant="tonal"
+            color="primary"
+            block
+            class="mt-4 home-latest__more"
           >
-            <span class="home-latest__title">{{ resource.title }}</span>
-            <span class="home-latest__date">{{ resource.displayDate }}</span>
-          </NuxtLink>
-          <p v-if="!latest.length" class="muted-text text-body-2">暂无资源</p>
-          <VBtn to="/resources/" variant="tonal" color="primary" block class="mt-4">
             查看全部资源
             <Icon name="mdi:arrow-right" size="16" class="ml-1" aria-hidden="true" />
           </VBtn>
@@ -107,13 +115,24 @@ const sticky = computed(() => stickyResources(all.value));
   }
 }
 .home-top__grid {
+  // 轮播与最新资源共用一个高度：内容超出时由最新资源面板内部滚动，
+  // 两个容器始终等高，不会因最新条目数量变化把整行撑高。
+  --home-panel-height: 420px;
+
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  align-items: stretch;
   gap: $card-gap;
+}
+.home-top__carousel,
+.home-top__latest {
+  height: var(--home-panel-height);
+  min-height: 0;
 }
 .home-top__latest {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   padding: 18px;
   background: rgb(var(--v-theme-surface));
   border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
@@ -121,11 +140,31 @@ const sticky = computed(() => stickyResources(all.value));
 }
 .home-panel__title {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 8px;
   margin-bottom: 12px;
   font-size: 1rem;
   font-weight: 700;
+}
+.home-latest__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  padding-right: 4px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(var(--v-theme-on-surface), 0.24);
+    border-radius: 999px;
+  }
+}
+.home-latest__more {
+  flex: 0 0 auto;
 }
 .home-latest__item {
   display: flex;
@@ -209,7 +248,17 @@ const sticky = computed(() => stickyResources(all.value));
 
 @media (max-width: $breakpoint-lg) {
   .home-top__grid {
+    --home-panel-height: auto;
     grid-template-columns: 1fr;
+  }
+  // 窄屏堆叠时不需要等高，最新资源恢复完整展开、不出现内部滚动条。
+  .home-top__carousel,
+  .home-top__latest {
+    height: auto;
+  }
+  .home-latest__scroll {
+    overflow-y: visible;
+    padding-right: 0;
   }
 }
 </style>

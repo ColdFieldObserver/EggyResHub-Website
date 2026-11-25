@@ -70,7 +70,10 @@ onBeforeUnmount(() => {
 
 <style scoped lang="scss">
 .featured {
+  display: flex;
+  flex-direction: column;
   position: relative;
+  height: 100%;
   overflow: hidden;
   border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
   border-radius: $radius-lg;
@@ -79,11 +82,16 @@ onBeforeUnmount(() => {
 .featured__link {
   display: block;
   position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
   text-decoration: none;
 }
 .featured__cover {
   display: block;
   width: 100%;
+  // 有明确父高度时铺满（由外层统一控制等高）；父高度不定时回退到 16:9。
+  height: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   animation: featured-fade $transition-normal ease;
@@ -103,6 +111,7 @@ onBeforeUnmount(() => {
 }
 .featured__controls {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   justify-content: center;
   gap: 8px;
@@ -127,8 +136,10 @@ onBeforeUnmount(() => {
 }
 .featured__empty {
   display: flex;
+  flex: 1 1 auto;
   align-items: center;
   justify-content: center;
+  height: 100%;
   min-height: 220px;
 }
 

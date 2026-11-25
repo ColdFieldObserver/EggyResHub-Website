@@ -55,7 +55,7 @@ pnpm format:check        # 只检查不写入（CI 用）
 - 站内链接一律 `<NuxtLink :to>`，严禁裸 `<a href>` 指向站内路由；站外链接 `target="_blank" rel="noopener noreferrer"`（正文由 `rehype-external-links.ts` 构建期处理）。
 - 内容 frontmatter：`title / date / categories / tags / description / stickypost / cover`；字段类型在 `content.config.ts` 用 zod 声明，**新增字段先改 schema**。
 - `date` 按字符串接收，须经 `shared/utils/date.ts` 的 UTC 解析，避免构建机时区漂移。
-- 资源按分区存放 `content/<section>/*.md`，分区元信息在 `content/<section>/.categorynav.yml`（`title / description / order`）。
+- 资源文档放在 `content/` 下任意层级（文件夹只是存放方式，不是分区）；分类完全由 frontmatter 的 `categories` 决定，详情页统一为 `/resources/<slug>`。
 - 数据链路：`server/routes/api/*.json.ts` 在构建期生成静态 JSON，前端 composable 读取；**不要在组件里直接 `queryCollection`**（预渲染阶段拿不到请求上下文）。文件命名用 `<dir>/index.json.ts`，不要 `[slug].json.ts`。
 
 ### 字体与图标
@@ -79,13 +79,13 @@ pnpm format:check        # 只检查不写入（CI 用）
 app/                       # 页面 / 布局 / 组件 / composables / data / assets
 ├─ app.vue                 # NuxtLayout + NuxtPage
 ├─ layouts/default.vue     # VApp 外壳：顶栏 + 宽侧栏 + 主内容 + 全局对话框
-├─ pages/                  # 首页 / 资源 / 分类 / 标签 / 分区 / 友链 / 社区 / 搜索 / 详情
+├─ pages/                  # 首页 / 资源 / 分类 / 标签 / 友链 / 社区 / 搜索 / 详情
 ├─ components/             # 卡片 / 轮播 / 对话框 / Giscus 等
 │  └─ content/             # Prose 覆盖：ProsePre / ProseTable / ProseH2/H3 / ProseUl/Ol/Li
 ├─ composables/            # useSiteTheme / useResources / useSearch / useSidebar
 ├─ data/                   # nav / home / links / communities / about
 └─ assets/styles/          # settings.scss / _vars.scss / main / prose / animation
-content/<section>/         # 资源文档 + .categorynav.yml
+content/                   # 资源文档（任意层级，分类由 frontmatter 决定）
 shared/                    # site.ts（SITE / PAGE_SIZE / GISCUS）、types、utils
 build/                     # content-index.ts（路由枚举）、rehype-external-links.ts
 server/routes/api/         # 构建期静态 JSON

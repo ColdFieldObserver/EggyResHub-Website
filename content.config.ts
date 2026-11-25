@@ -2,11 +2,10 @@ import { defineCollection, defineContentConfig, z } from '@nuxt/content';
 
 // ============================================================
 // 内容集合：资源文档
-//   - 源文件在 content/<section>/*.md，路径形如 content/category/source.md
-//   - source 加 prefix '/resources'：文档的 path 即详情页路由
-//     /resources/<section>/<slug>
-//   - 分类 / 标签是 frontmatter 字段，由前端过滤生成列表页
-//   - 分区元信息在 content/<section>/.categorynav.yml，由构建期脚本读取
+//   - 源文件在 content/ 下任意层级（文件夹只是存放方式，不是分区）
+//   - source 加 prefix '/resources'：文档 path 形如 /resources/<folder>/<slug>
+//   - 对外详情页统一扁平化为 /resources/<slug>（见 shared/utils/content.ts）
+//   - 分类 / 标签完全来自 frontmatter 字段，由前端过滤生成列表页
 // ============================================================
 export default defineContentConfig({
   collections: {

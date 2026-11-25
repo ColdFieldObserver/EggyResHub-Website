@@ -1,7 +1,7 @@
 import { computed, type ComputedRef, type Ref } from 'vue';
 import { PAGE_SIZE } from '#shared/site';
 import { toArray } from '#shared/utils/content';
-import type { Resource, SectionNav } from '#shared/types/resource';
+import type { Resource } from '#shared/types/resource';
 
 // ============================================================
 // 资源数据访问
@@ -17,26 +17,16 @@ export function useAllResources(): Ref<Resource[]> {
   return useState<Resource[]>('resources:all', () => []);
 }
 
-/** 全站共用的分区信息状态。 */
-export function useSections(): Ref<SectionNav[]> {
-  return useState<SectionNav[]>('resources:sections', () => []);
-}
-
-/** 拉取并规范化全部资源与分区信息。重复调用直接复用已填充状态。 */
+/** 拉取并规范化全部资源。重复调用直接复用已填充状态。 */
 export async function fetchResources(): Promise<void> {
   const resources = useAllResources();
-  const sections = useSections();
 
   // 刻意不用 useAsyncData：数据写进 useState 后本来就随 payload 序列化，
   // 再套一层 asyncData 只会在 layout 里制造额外的 hydration 等待。
   // SSR 阶段必须用 useRequestFetch 才能发相对地址。
   const fetcher = import.meta.server ? useRequestFetch() : $fetch;
-  const [list, nav] = await Promise.all([
-    fetcher<Resource[]>('/api/catalog.json'),
-    fetcher<SectionNav[]>('/api/sections.json'),
-  ]);
+  const list = await fetcher<Resource[]>('/api/catalog.json');
   resources.value = list ?? [];
-  sections.value = nav ?? [];
 }
 
 /** 置顶优先排序：stickypost 为 true 的资源整体前移（稳定排序）。 */
@@ -100,36 +90,24 @@ export function stickyResources(posts: Resource[]): Resource[] {
   return posts.filter((post) => post.stickypost);
 }
 
-/** 按分类 / 标签 / 分区名过滤。 */
+/** 按分类 / 标签名过滤。 */
 export function filterByTerm(
   posts: Resource[],
-  kind: 'categories' | 'tags' | 'sections',
+  kind: 'categories' | 'tags',
   name: string,
 ): Resource[] {
-  if (kind === 'sections') return posts.filter((post) => post.section === name);
   return posts.filter((post) =>
     toArray(kind === 'categories' ? post.categories : post.tags).includes(name),
   );
 }
 
-/**
- * 分类详情页的解析：分区已并入分类路由（/categories/<slug>），
- * 因此 URL 里的 name 既可能是 frontmatter 分类名，也可能是分区 slug。
- * 命中分区时按 section 过滤、标题用分区标题；否则按分类名过滤。
- */
+/** 分类详情页：URL 里的 name 就是 frontmatter 里的分类名。 */
 export function useCategoryView(name: () => string) {
   const all = useAllResources();
-  const sections = useSections();
 
-  const section = computed(() => sections.value.find((item) => item.slug === name()));
-  const title = computed(() => (section.value ? section.value.title : `分类：${name()}`));
-  const summary = computed(() => (section.value ? section.value.description : '该分类下的资源'));
-  const source = () =>
-    pinnedFirst(
-      section.value
-        ? filterByTerm(all.value, 'sections', section.value.slug)
-        : filterByTerm(all.value, 'categories', name()),
-    );
+  const title = computed(() => `分类：${name()}`);
+  const summary = computed(() => '该分类下的资源');
+  const source = () => pinnedFirst(filterByTerm(all.value, 'categories', name()));
 
-  return { title, summary, source, section };
+  return { title, summary, source };
 }

@@ -27,13 +27,16 @@ export function toArray(value: unknown): string[] {
   return [String(value)];
 }
 
-/** 原始条目 → 轻量 Resource（不含正文，供列表 / 卡片 / 侧栏使用） */
+/**
+ * 原始条目 → 轻量 Resource（不含正文，供列表 / 卡片 / 侧栏使用）。
+ *
+ * 内容文件可以放在 content/ 的任意层级（文件夹只是存放方式，不是分区）；
+ * 对外统一用扁平详情页路径 /resources/<slug>。
+ */
 export function toResource(doc: ContentDoc): Resource {
-  const path = doc.path;
-  // /resources/<section>/<slug> → section 是第二段
-  const section = path.split('/').filter(Boolean)[1] ?? '';
+  const slug = doc.path.split('/').filter(Boolean).at(-1) ?? '';
   return {
-    path,
+    path: `/resources/${slug}`,
     title: doc.title ?? '',
     date: String(doc.date ?? ''),
     displayDate: formatDisplayDate(doc.date),
@@ -42,7 +45,6 @@ export function toResource(doc: ContentDoc): Resource {
     description: doc.description ?? '',
     stickypost: doc.stickypost === true,
     cover: doc.cover && doc.cover.trim() ? doc.cover : DEFAULT_COVER,
-    section,
   };
 }
 
