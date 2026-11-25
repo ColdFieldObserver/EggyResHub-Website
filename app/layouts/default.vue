@@ -153,7 +153,7 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
   font-family: $font-ui;
   font-size: 0.85rem;
   color: rgb(var(--v-theme-on-surface) / 0.6);
-  background: rgb(var(--v-theme-surface-variant));
+  background: rgb(var(--v-theme-surface));
   border: 1px solid rgb(var(--v-theme-on-surface) / 0.1);
   border-radius: 999px;
   cursor: pointer;
