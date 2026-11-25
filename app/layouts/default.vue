@@ -201,13 +201,28 @@ html:not(.js) .app-topbar__search-fallback {
   color: rgba(var(--v-theme-on-surface), 0.5);
 }
 
-// 顶栏按钮涟漪：Vuetify 默认取 currentColor（随主题明暗）× 0.25，
-// 深色下白色涟漪在深灰顶栏上偏淡。这里不改颜色、只把深色模式的不透明度
-// 提到 0.42，靠明暗变化让点击反馈清晰；浅色维持 Vuetify 默认。
-// 主题切换按钮保持 Vuetify 默认，不动；原生 <button> 靠 v-ripple 指令产生涟漪。
+// 顶栏按钮涟漪：Vuetify 默认取 currentColor（随主题明暗），透明度算式为
+// calc(.25 * var(--v-theme-overlay-multiplier))。但 variant="text" 且不带
+// color 的按钮作用域里该变量未定义，整条声明失效 → opacity 停在 0，涟漪消失。
+// 因此浅色 / 深色都显式覆盖 opacity，不依赖那个变量：
+// 浅色 0.25（Vuetify 默认值）、深色 0.42（深灰顶栏上更清晰）。
+// 主题切换按钮不带 app-topbar__btn，保持 Vuetify 默认；原生 <button> 靠 v-ripple 指令。
+.app-topbar__btn {
+  :deep(.v-ripple__animation--in) {
+    opacity: 0.25;
+  }
+}
 html.dark .app-topbar__btn {
   :deep(.v-ripple__animation--in) {
     opacity: 0.42;
+  }
+}
+
+// 顶栏左右留白：Vuetify 只给首尾按钮 4px margin，内容区本身无 padding，
+// 按钮会贴住视口两侧。这里给内容区加左右内边距，让菜单按钮与右侧按钮不贴边。
+.app-topbar {
+  :deep(.v-toolbar__content) {
+    padding-inline: 16px;
   }
 }
 
