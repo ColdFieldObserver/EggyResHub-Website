@@ -52,7 +52,7 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
       <VBtn
         variant="text"
         density="comfortable"
-        class="app-topbar__menu"
+        class="app-topbar__menu app-topbar__btn"
         :aria-label="sidebarOpen ? '收起侧边栏' : '展开侧边栏'"
         :aria-expanded="sidebarOpen"
         @click="toggleSidebar"
@@ -69,7 +69,8 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
       <!-- 搜索栏（点击呼出对话框） -->
       <button
         type="button"
-        class="app-topbar__search js-only"
+        v-ripple
+        class="app-topbar__search app-topbar__btn js-only"
         aria-haspopup="dialog"
         aria-keyshortcuts="Control+K Meta+K"
         @click="onOpenSearch"
@@ -85,6 +86,7 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
       <VBtn
         variant="text"
         density="comfortable"
+        class="app-topbar__btn"
         aria-label="关于本站"
         title="关于本站"
         @click="aboutRef?.open()"
@@ -193,6 +195,22 @@ html:not(.js) .app-topbar__search-fallback {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(var(--v-theme-on-surface), 0.5);
+}
+
+// 顶栏按钮涟漪：Vuetify 默认取 currentColor × 0.25，深色下白色涟漪在深灰
+// 顶栏上几乎看不见。菜单 / 搜索 / 关于三个按钮统一用品牌色并提高不透明度，
+// 让深色模式的点击反馈清晰可见（主题切换按钮保持 Vuetify 默认，不动）。
+// 原生 <button> 通过 v-ripple 指令生成同样的 .v-ripple__animation 结构。
+.app-topbar__btn {
+  :deep(.v-ripple__animation--in) {
+    background: rgb(var(--v-theme-primary));
+  }
+}
+html.dark .app-topbar__btn {
+  :deep(.v-ripple__animation--in) {
+    background: rgb(var(--v-theme-primary));
+    opacity: 0.42;
+  }
 }
 
 @media (max-width: $breakpoint-lg) {
