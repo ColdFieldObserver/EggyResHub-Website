@@ -121,14 +121,17 @@ export default defineNuxtConfig({
         // 首帧同步脚本（关键）：在首次绘制前把用户选择的主题写入 <html data-theme>，
         // 同时给 <html> 加 .dark / .light —— 手写样式与正文深色规则按 class 切换，
         // 两套标记必须同时落地，否则深色用户首帧会闪白。
+        // 同步写 color-scheme：原生 <input>/滚动条按它上色；light/dark 显式写，
+        // auto 清空交回系统媒体查询（与 useSiteTheme.ts 的 applyVuetify 一致）。
         // storage key 与 useSiteTheme.ts 保持一致。
         {
           innerHTML:
             `try{var m=localStorage.getItem("${THEME_STORAGE_KEY}")||"auto";` +
             'var d=m==="dark"||(m==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);' +
             'var r=document.documentElement;r.setAttribute("data-theme",m);' +
-            'r.classList.toggle("dark",d);r.classList.toggle("light",!d)' +
-            '}catch(e){var r=document.documentElement;r.setAttribute("data-theme","auto");r.classList.add("light")}',
+            'r.classList.toggle("dark",d);r.classList.toggle("light",!d);' +
+            'r.style.colorScheme=m==="auto"?"":m' +
+            '}catch(e){var r=document.documentElement;r.setAttribute("data-theme","auto");r.classList.add("light");r.style.colorScheme=""}',
           tagPriority: 'critical',
         },
         // 首帧同步脚本：DOM 解析时立即给 <html> 加 .js。

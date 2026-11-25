@@ -136,7 +136,6 @@ export function buildRoutes(): string[] {
     '/resources/',
     '/categories/',
     '/tags/',
-    '/sections/',
     '/links',
     '/community',
     '/search/',
@@ -157,8 +156,14 @@ export function buildRoutes(): string[] {
     routes.push(`/api/resources${resource.path.replace(/^\/resources/, '')}/index.json`);
   }
 
-  // 分区页
-  for (const section of listSections()) routes.push(`/sections/${section.slug}`);
+  // 分区已并入分类体系：分区 slug 走 /categories/<slug>（与中文分类名共存）
+  for (const section of listSections()) {
+    const base = `/categories/${section.slug}`;
+    routes.push(base);
+    for (let page = 2; page <= totalPagesOf(section.count); page += 1) {
+      routes.push(`${base}/page/${page}`);
+    }
+  }
 
   // 分类 / 标签页（含各自分页）
   for (const field of ['categories', 'tags'] as const) {

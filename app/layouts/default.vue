@@ -10,14 +10,13 @@ import { ref, watch, onMounted } from 'vue';
 import { useTheme } from 'vuetify';
 import { SITE } from '#shared/site';
 import { MAIN_NAV } from '~/data/nav';
-import { fetchResources, useSections } from '~/composables/useResources';
+import { fetchResources } from '~/composables/useResources';
 import { sidebarOpen, toggleSidebar, closeSidebarOnMobile } from '~/composables/useSidebar';
 import { useSiteTheme } from '~/composables/useSiteTheme';
 import { openSearchDialog } from '~/composables/useSearch';
 
 // 渲染前填充数据（写进 useState，随 payload 序列化）
 await fetchResources();
-const sections = useSections();
 
 const aboutRef = ref<InstanceType<typeof AboutDialog> | null>(null);
 const { resolvedDark, cycle } = useSiteTheme();
@@ -116,21 +115,6 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
             @click="closeSidebarOnMobile"
           />
         </VList>
-
-        <VDivider class="my-3" />
-
-        <p class="app-sidebar__group">资源分区</p>
-        <VList density="compact" nav>
-          <VListItem
-            v-for="section in sections"
-            :key="section.slug"
-            :to="`/sections/${section.slug}`"
-            :title="section.title"
-            :subtitle="`${section.count} 个资源`"
-            prepend-icon="mdi:folder-multiple-outline"
-            @click="closeSidebarOnMobile"
-          />
-        </VList>
       </div>
     </VNavigationDrawer>
 
@@ -168,6 +152,7 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
   padding: 7px 12px;
   font-family: $font-ui;
   font-size: 0.85rem;
+  color-scheme: light;
   color: rgb(var(--v-theme-on-surface) / 0.6);
   background: rgb(var(--v-theme-surface-variant));
   border: 1px solid rgb(var(--v-theme-on-surface) / 0.1);
@@ -197,6 +182,9 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
 }
 html:not(.js) .app-topbar__search-fallback {
   display: inline;
+}
+html.dark .app-topbar__search {
+  color-scheme: dark;
 }
 .app-sidebar__inner {
   padding: 16px 12px;

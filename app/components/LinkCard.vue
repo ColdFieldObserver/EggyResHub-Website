@@ -3,40 +3,41 @@ import type { LinkItem } from '#shared/types/resource';
 
 // 友情链接 / 社区推广的列表项：图片图标 + 标题 + 描述。
 // 外链一律新标签页打开（与正文站外链接规则一致）。
+// 用 Vuetify VCard + link/ripple，自带点击涟漪与主题配色。
 const props = defineProps<{ item: LinkItem }>();
 </script>
 
 <template>
-  <a class="link-card" :href="props.item.href" target="_blank" rel="noopener noreferrer">
-    <div class="link-card__icon">
-      <Icon :name="props.item.icon" size="28" aria-hidden="true" />
+  <VCard
+    :href="props.item.href"
+    target="_blank"
+    rel="noopener noreferrer"
+    link
+    ripple
+    variant="outlined"
+    class="link-card"
+  >
+    <div class="link-card__inner">
+      <div class="link-card__icon">
+        <Icon :name="props.item.icon" size="28" aria-hidden="true" />
+      </div>
+      <div class="link-card__body">
+        <h3 class="link-card__title">
+          {{ props.item.title }}
+          <Icon name="mdi:open-in-new" size="13" aria-hidden="true" />
+        </h3>
+        <p class="link-card__desc">{{ props.item.description }}</p>
+      </div>
     </div>
-    <div class="link-card__body">
-      <h3 class="link-card__title">
-        {{ props.item.title }}
-        <Icon name="mdi:open-in-new" size="13" aria-hidden="true" />
-      </h3>
-      <p class="link-card__desc">{{ props.item.description }}</p>
-    </div>
-  </a>
+  </VCard>
 </template>
 
 <style scoped lang="scss">
-.link-card {
+.link-card__inner {
   display: flex;
   align-items: flex-start;
   gap: 14px;
   padding: 16px;
-  text-decoration: none;
-  color: rgb(var(--v-theme-on-surface));
-  background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
-  border-radius: $radius-md;
-  transition: box-shadow $transition-normal ease;
-
-  &:hover {
-    box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
-  }
 }
 .link-card__icon {
   display: flex;
@@ -57,6 +58,7 @@ const props = defineProps<{ item: LinkItem }>();
   gap: 4px;
   font-size: 0.98rem;
   font-weight: 600;
+  color: rgb(var(--v-theme-on-surface));
 }
 .link-card__desc {
   margin-top: 4px;

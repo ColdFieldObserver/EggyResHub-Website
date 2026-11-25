@@ -111,3 +111,25 @@ export function filterByTerm(
     toArray(kind === 'categories' ? post.categories : post.tags).includes(name),
   );
 }
+
+/**
+ * 分类详情页的解析：分区已并入分类路由（/categories/<slug>），
+ * 因此 URL 里的 name 既可能是 frontmatter 分类名，也可能是分区 slug。
+ * 命中分区时按 section 过滤、标题用分区标题；否则按分类名过滤。
+ */
+export function useCategoryView(name: () => string) {
+  const all = useAllResources();
+  const sections = useSections();
+
+  const section = computed(() => sections.value.find((item) => item.slug === name()));
+  const title = computed(() => (section.value ? section.value.title : `分类：${name()}`));
+  const summary = computed(() => (section.value ? section.value.description : '该分类下的资源'));
+  const source = () =>
+    pinnedFirst(
+      section.value
+        ? filterByTerm(all.value, 'sections', section.value.slug)
+        : filterByTerm(all.value, 'categories', name()),
+    );
+
+  return { title, summary, source, section };
+}
