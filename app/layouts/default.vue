@@ -197,18 +197,12 @@ html:not(.js) .app-topbar__search-fallback {
   color: rgba(var(--v-theme-on-surface), 0.5);
 }
 
-// 顶栏按钮涟漪：Vuetify 默认取 currentColor × 0.25，深色下白色涟漪在深灰
-// 顶栏上几乎看不见。菜单 / 搜索 / 关于三个按钮统一用品牌色并提高不透明度，
-// 让深色模式的点击反馈清晰可见（主题切换按钮保持 Vuetify 默认，不动）。
-// 原生 <button> 通过 v-ripple 指令生成同样的 .v-ripple__animation 结构。
-.app-topbar__btn {
-  :deep(.v-ripple__animation--in) {
-    background: rgb(var(--v-theme-primary));
-  }
-}
+// 顶栏按钮涟漪：Vuetify 默认取 currentColor（随主题明暗）× 0.25，
+// 深色下白色涟漪在深灰顶栏上偏淡。这里不改颜色、只把深色模式的不透明度
+// 提到 0.42，靠明暗变化让点击反馈清晰；浅色维持 Vuetify 默认。
+// 主题切换按钮保持 Vuetify 默认，不动；原生 <button> 靠 v-ripple 指令产生涟漪。
 html.dark .app-topbar__btn {
   :deep(.v-ripple__animation--in) {
-    background: rgb(var(--v-theme-primary));
     opacity: 0.42;
   }
 }
