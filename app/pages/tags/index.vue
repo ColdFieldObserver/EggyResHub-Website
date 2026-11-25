@@ -42,6 +42,6 @@ const terms = computed(() => collectTerms('tags', all.value));
 .tag-chip__count {
   margin-left: 6px;
   font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface) / 0.5);
+  color: rgba(var(--v-theme-on-surface), 0.5);
 }
 </style>

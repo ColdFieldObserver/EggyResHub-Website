@@ -65,13 +65,13 @@
   }
 
   .muted-text {
-    color: rgb(var(--v-theme-on-surface) / 0.62);
+    color: rgba(var(--v-theme-on-surface), 0.62);
   }
 
   // 手写卡片外观：封面通栏 + 信息区，描边分层，hover 只加阴影（不做大位移/旋转）
   .resource-card {
     overflow: hidden;
-    border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+    border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
     border-radius: $radius-md;
     transition: box-shadow $transition-normal ease;
 
@@ -101,13 +101,13 @@
 
   .resource-card__meta {
     font-size: 0.8rem;
-    color: rgb(var(--v-theme-on-surface) / 0.6);
+    color: rgba(var(--v-theme-on-surface), 0.6);
   }
 
   .resource-card__desc {
     font-size: 0.875rem;
     line-height: 1.6;
-    color: rgb(var(--v-theme-on-surface) / 0.72);
+    color: rgba(var(--v-theme-on-surface), 0.72);
   }
 
   // 通用网格（卡片列数由 CSS 变量统一接管，不在调用点另写）

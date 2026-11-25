@@ -97,6 +97,6 @@ const terms = computed(() => collectTerms('categories', all.value));
 }
 .term-card__count {
   font-size: 0.8rem;
-  color: rgb(var(--v-theme-on-surface) / 0.55);
+  color: rgba(var(--v-theme-on-surface), 0.55);
 }
 </style>

@@ -72,7 +72,7 @@ onBeforeUnmount(() => {
 .featured {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
   border-radius: $radius-lg;
   background: rgb(var(--v-theme-surface));
 }
@@ -118,7 +118,7 @@ onBeforeUnmount(() => {
   padding: 0;
   border: none;
   border-radius: 50%;
-  background: rgb(var(--v-theme-on-surface) / 0.25);
+  background: rgba(var(--v-theme-on-surface), 0.25);
   cursor: pointer;
   transition: background-color $transition-fast ease;
 }

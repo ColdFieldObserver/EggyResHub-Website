@@ -103,7 +103,7 @@ const sticky = computed(() => stickyResources(all.value));
   p {
     margin-top: 4px;
     font-size: 0.9rem;
-    color: rgb(var(--v-theme-on-surface) / 0.6);
+    color: rgba(var(--v-theme-on-surface), 0.6);
   }
 }
 .home-top__grid {
@@ -116,7 +116,7 @@ const sticky = computed(() => stickyResources(all.value));
   flex-direction: column;
   padding: 18px;
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
   border-radius: $radius-lg;
 }
 .home-panel__title {
@@ -135,7 +135,7 @@ const sticky = computed(() => stickyResources(all.value));
   padding: 10px 4px;
   text-decoration: none;
   color: rgb(var(--v-theme-on-surface));
-  border-bottom: 1px solid rgb(var(--v-theme-on-surface) / 0.08);
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.08);
   &:hover .home-latest__title {
     color: rgb(var(--v-theme-primary));
   }
@@ -150,7 +150,7 @@ const sticky = computed(() => stickyResources(all.value));
 .home-latest__date {
   flex: 0 0 auto;
   font-size: 0.75rem;
-  color: rgb(var(--v-theme-on-surface) / 0.5);
+  color: rgba(var(--v-theme-on-surface), 0.5);
 }
 .tips-grid {
   display: grid;
@@ -162,7 +162,7 @@ const sticky = computed(() => stickyResources(all.value));
   gap: 12px;
   padding: 16px;
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
   border-radius: $radius-md;
 }
 .tip-card__icon {
@@ -172,7 +172,7 @@ const sticky = computed(() => stickyResources(all.value));
   flex: 0 0 40px;
   height: 40px;
   color: rgb(var(--v-theme-primary));
-  background: rgb(var(--v-theme-primary) / 0.1);
+  background: rgba(var(--v-theme-primary), 0.1);
   border-radius: $radius-sm;
 }
 .tip-card__title {
@@ -183,7 +183,7 @@ const sticky = computed(() => stickyResources(all.value));
   margin-top: 4px;
   font-size: 0.85rem;
   line-height: 1.6;
-  color: rgb(var(--v-theme-on-surface) / 0.65);
+  color: rgba(var(--v-theme-on-surface), 0.65);
 }
 .home-social {
   display: flex;
@@ -199,7 +199,7 @@ const sticky = computed(() => stickyResources(all.value));
   font-size: 0.9rem;
   color: rgb(var(--v-theme-on-surface));
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
   border-radius: 999px;
   transition: border-color $transition-fast ease;
   &:hover {

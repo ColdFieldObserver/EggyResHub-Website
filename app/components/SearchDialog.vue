@@ -146,7 +146,7 @@ function onResultClick(event: MouseEvent): void {
   // （Vuetify 4 的类自带 color-scheme），这里不重复内联声明，避免优先级打架。
   color: rgb(var(--v-theme-on-surface));
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.18);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.18);
   border-radius: 999px;
   outline: none;
   transition: border-color $transition-fast ease;

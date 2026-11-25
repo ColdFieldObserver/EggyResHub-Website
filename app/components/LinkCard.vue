@@ -46,7 +46,7 @@ const props = defineProps<{ item: LinkItem }>();
   flex: 0 0 48px;
   height: 48px;
   color: rgb(var(--v-theme-primary));
-  background: rgb(var(--v-theme-primary) / 0.1);
+  background: rgba(var(--v-theme-primary), 0.1);
   border-radius: $radius-sm;
 }
 .link-card__body {
@@ -64,6 +64,6 @@ const props = defineProps<{ item: LinkItem }>();
   margin-top: 4px;
   font-size: 0.85rem;
   line-height: 1.55;
-  color: rgb(var(--v-theme-on-surface) / 0.65);
+  color: rgba(var(--v-theme-on-surface), 0.65);
 }
 </style>

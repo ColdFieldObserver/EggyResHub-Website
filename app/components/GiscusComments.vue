@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
 }
 .giscus-skeleton__bar {
   height: 12px;
-  background: rgb(var(--v-theme-on-surface) / 0.08);
+  background: rgba(var(--v-theme-on-surface), 0.08);
   border-radius: 6px;
   animation: skeleton-pulse 1.4s ease-in-out infinite;
 }

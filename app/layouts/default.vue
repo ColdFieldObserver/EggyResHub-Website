@@ -152,9 +152,9 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
   padding: 7px 12px;
   font-family: $font-ui;
   font-size: 0.85rem;
-  color: rgb(var(--v-theme-on-surface) / 0.6);
+  color: rgba(var(--v-theme-on-surface), 0.6);
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.1);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
   border-radius: 999px;
   cursor: pointer;
   transition: border-color $transition-fast ease;
@@ -172,7 +172,7 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
   font-family: $font-code;
   font-size: 0.7rem;
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.14);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.14);
   border-radius: 4px;
 }
 .app-topbar__search-fallback {
@@ -192,7 +192,7 @@ html:not(.js) .app-topbar__search-fallback {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgb(var(--v-theme-on-surface) / 0.5);
+  color: rgba(var(--v-theme-on-surface), 0.5);
 }
 
 @media (max-width: $breakpoint-lg) {

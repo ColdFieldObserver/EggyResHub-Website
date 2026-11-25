@@ -76,7 +76,7 @@ useSeoMeta({ title: '搜索资源' });
   // color-scheme 由 <html> 的 .v-theme--* 类统一控制（Vuetify 4 自带），不重复内联
   color: rgb(var(--v-theme-on-surface));
   background: rgb(var(--v-theme-surface));
-  border: 1px solid rgb(var(--v-theme-on-surface) / 0.18);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.18);
   border-radius: 999px;
   outline: none;
   &:focus {

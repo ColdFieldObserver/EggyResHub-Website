@@ -31,7 +31,7 @@ const props = defineProps<{ error: NuxtError }>();
   font-family: $font-code;
   font-size: 4rem;
   font-weight: 700;
-  color: rgb(var(--v-theme-primary) / 0.5);
+  color: rgba(var(--v-theme-primary), 0.5);
   line-height: 1;
 }
 </style>

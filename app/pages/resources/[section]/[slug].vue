@@ -106,7 +106,7 @@ useSeoMeta({
   gap: 10px;
   margin: 14px 0 10px;
   font-size: 0.82rem;
-  color: rgb(var(--v-theme-on-surface) / 0.6);
+  color: rgba(var(--v-theme-on-surface), 0.6);
 
   span {
     display: inline-flex;
@@ -119,7 +119,7 @@ useSeoMeta({
   font-size: 0.78rem;
   text-decoration: none;
   color: rgb(var(--v-theme-primary));
-  background: rgb(var(--v-theme-primary) / 0.12);
+  background: rgba(var(--v-theme-primary), 0.12);
   border-radius: 999px;
 }
 .post-tags {
@@ -131,7 +131,7 @@ useSeoMeta({
 .post-tag {
   font-size: 0.8rem;
   text-decoration: none;
-  color: rgb(var(--v-theme-on-surface) / 0.6);
+  color: rgba(var(--v-theme-on-surface), 0.6);
   &:hover {
     color: rgb(var(--v-theme-primary));
   }
@@ -142,7 +142,7 @@ useSeoMeta({
   gap: 16px;
   margin-top: 36px;
   padding-top: 20px;
-  border-top: 1px solid rgb(var(--v-theme-on-surface) / 0.12);
+  border-top: 1px solid rgba(var(--v-theme-on-surface), 0.12);
 }
 .post-nav__item {
   display: inline-flex;
@@ -151,7 +151,7 @@ useSeoMeta({
   max-width: 46%;
   font-size: 0.88rem;
   text-decoration: none;
-  color: rgb(var(--v-theme-on-surface) / 0.75);
+  color: rgba(var(--v-theme-on-surface), 0.75);
   &:hover {
     color: rgb(var(--v-theme-primary));
   }
