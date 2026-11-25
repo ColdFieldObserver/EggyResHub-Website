@@ -152,7 +152,6 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
   padding: 7px 12px;
   font-family: $font-ui;
   font-size: 0.85rem;
-  color-scheme: light;
   color: rgb(var(--v-theme-on-surface) / 0.6);
   background: rgb(var(--v-theme-surface-variant));
   border: 1px solid rgb(var(--v-theme-on-surface) / 0.1);
@@ -182,9 +181,6 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
 }
 html:not(.js) .app-topbar__search-fallback {
   display: inline;
-}
-html.dark .app-topbar__search {
-  color-scheme: dark;
 }
 .app-sidebar__inner {
   padding: 16px 12px;

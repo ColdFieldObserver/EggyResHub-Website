@@ -142,10 +142,8 @@ function onResultClick(event: MouseEvent): void {
   padding: 12px 16px 12px 44px;
   font-family: $font-ui;
   font-size: 15px;
-  // 原生控件的底色/清除按钮由 color-scheme 决定，必须跟随站点主题，
-  // 否则与 Vuetify 主题相反（浅色模式出深色框）。html 上已同步，
-  // 这里再声明一次确保 scoped 边界内生效。
-  color-scheme: light;
+  // color-scheme 由 <html> 上的 .v-theme--dark/.v-theme--light 类统一控制
+  // （Vuetify 4 的类自带 color-scheme），这里不重复内联声明，避免优先级打架。
   color: rgb(var(--v-theme-on-surface));
   background: rgb(var(--v-theme-surface));
   border: 1px solid rgb(var(--v-theme-on-surface) / 0.18);
@@ -156,9 +154,6 @@ function onResultClick(event: MouseEvent): void {
   &:focus {
     border-color: rgb(var(--v-theme-primary));
   }
-}
-html.dark .search-field__input {
-  color-scheme: dark;
 }
 .search-results {
   max-height: min(58vh, 640px);

@@ -40,23 +40,22 @@ const listeners = new Set<ThemeListener>();
 let bound = false;
 
 /**
- * 同步 Vuetify 运行时主题与原生控件配色。
+ * 同步 Vuetify 主题到 <html>。
  *
- * 关键点：<input> / <select> / 滚动条等原生控件的底色由 CSS `color-scheme` 决定，
- * 不看 Vuetify 的 v-theme class。若只切 class 不写 color-scheme，原生搜索框会
- * 按系统偏好渲染，与站点主题相反（浅色模式出深色框、深色模式出浅色框）。
- * 因此三态里：light/dark 显式写 colorScheme；auto 必须清空，交回系统媒体查询。
+ * Vuetify 4 的主题 CSS：浅色变量挂在 :root、深色变量挂在 .v-theme--dark 类，
+ * 且这两处各自带 `color-scheme`（原生 <input>/滚动条据此上色）。因此只要
+ * 正确切换 .v-theme--dark / .v-theme--light 类，原生控件与组件颜色就一致。
+ * 切勿在 <html> 上内联 style.colorScheme —— 它优先级高于 Vuetify 的类，
+ * 会出现「CSS 变量是浅色、原生控件是深色」的搜索框配色反过来问题。
+ * auto 模式的系统跟随由首帧脚本解析后统一落到这两个类上（见 nuxt.config.ts）。
  */
 function applyVuetify(dark: boolean): void {
   if (typeof window === 'undefined') return;
   const root = document.documentElement;
-  // Vuetify 4 组件颜色取自 v-theme--light / v-theme--dark class 下的 CSS 变量，
-  // 由 VApp 挂在其根节点；<html> 补一份，保证手写 CSS 与 SSR 首帧一致。
+  // VApp 根节点也带该类，但 <html> 同步一份可让手写 CSS 与 SSR 首帧一致
   root.classList.toggle('v-theme--dark', dark);
   root.classList.toggle('v-theme--light', !dark);
   root.dataset.vuetifyTheme = dark ? 'dark' : 'light';
-  // auto 模式不写内联值：让浏览器按 prefers-color-scheme 自动处理原生控件
-  root.style.colorScheme = mode.value === 'auto' ? '' : mode.value;
 }
 
 function apply(): void {

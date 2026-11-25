@@ -73,8 +73,7 @@ useSeoMeta({ title: '搜索资源' });
   padding: 12px 18px;
   font-family: $font-ui;
   font-size: 15px;
-  // 原生控件按 color-scheme 上色，跟随站点主题（html 上已同步，这里兜底）
-  color-scheme: light;
+  // color-scheme 由 <html> 的 .v-theme--* 类统一控制（Vuetify 4 自带），不重复内联
   color: rgb(var(--v-theme-on-surface));
   background: rgb(var(--v-theme-surface));
   border: 1px solid rgb(var(--v-theme-on-surface) / 0.18);
@@ -83,8 +82,5 @@ useSeoMeta({ title: '搜索资源' });
   &:focus {
     border-color: rgb(var(--v-theme-primary));
   }
-}
-html.dark .search-input {
-  color-scheme: dark;
 }
 </style>
