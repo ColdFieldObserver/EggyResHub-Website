@@ -46,7 +46,7 @@ const VARS_DIR = fileURLToPath(new URL('./app/assets/styles', import.meta.url));
 export default defineNuxtConfig({
   compatibilityDate: '2026-11-01',
   ssr: true,
-  devtools: { enabled: false },
+  devtools: { enabled: true },
 
   modules: ['@nuxt/content', '@nuxt/icon', 'vuetify-nuxt-module'],
 
