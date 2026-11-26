@@ -1,9 +1,9 @@
 import { createRequire } from 'node:module';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { buildRoutes } from './build/content-index';
-import { rehypeExternalLinksBlank } from './build/rehype-external-links';
-import { SITE, THEME_STORAGE_KEY } from './shared/site';
+import { buildRoutes } from './build/content-index.ts';
+import { rehypeExternalLinksBlank } from './build/rehype-external-links.ts';
+import { SITE, THEME_STORAGE_KEY } from './shared/site.ts';
 
 // ============================================================
 // 蛋仔资源站 · Nuxt 站点配置
@@ -49,6 +49,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   modules: ['@nuxt/content', '@nuxt/icon', 'vuetify-nuxt-module'],
+
+  // 启用 Nuxt 5 预览期行为（Vite Environment API、大小写路由、Nitro 自动导入关闭等）
+  future: { compatibilityVersion: 5 },
 
   // ============================================================
   // Vuetify 4 接入

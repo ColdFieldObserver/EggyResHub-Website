@@ -2,6 +2,14 @@
 # 统一用扁平 node_modules 布局，本地与 CI 行为一致。
 nodeLinker: hoisted
 
+# unhead 3.5.x 的 @unhead/bundler 改用 oxc-parser 做静态替换，
+# 在本项目环境预渲染时报 "Array buffer allocation failed"。
+# 固定到与 PidanUI / OpenPidanUI 官网一致的 3.4.3。
+overrides:
+  unhead: 3.4.3
+  '@unhead/vue': 3.4.3
+  '@unhead/bundler': 3.4.3
+
 # pnpm 默认拦截安装脚本，需要构建二进制的依赖必须显式放行。
 # 注意：@nuxt/content 走 Node 内置 node:sqlite，不需要 better-sqlite3。
 allowBuilds:

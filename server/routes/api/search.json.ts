@@ -1,3 +1,4 @@
+import { defineEventHandler } from 'nuxt/server';
 import { queryCollection } from '@nuxt/content/server';
 import { toResource, toArray, mdcToText, byDateDesc } from '#shared/utils/content';
 
