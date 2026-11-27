@@ -125,9 +125,9 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
       </div>
     </VNavigationDrawer>
 
-    <!-- 主内容 -->
+    <!-- 主内容：普通页面与 error.vue 的 404 视图都从这里进入 -->
     <VMain class="app-main">
-      <NuxtPage />
+      <slot />
     </VMain>
 
     <!-- 右下角返回顶部（滚动超过阈值才出现） -->
