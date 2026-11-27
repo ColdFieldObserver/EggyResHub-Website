@@ -30,14 +30,18 @@ export function toArray(value: unknown): string[] {
 /**
  * 原始条目 → 轻量 Resource（不含正文，供列表 / 卡片 / 侧栏使用）。
  *
- * 内容文件可以放在 content/ 的任意层级（文件夹只是存放方式，不是分区）；
- * 对外统一用扁平详情页路径 /resources/<slug>。
+ * 内容文件按 content/<folder>/<slug>.md 存放：文件夹是第一层（分区），
+ * 对外详情页仍是扁平路径 /resources/<slug>。
  */
 export function toResource(doc: ContentDoc): Resource {
-  const slug = doc.path.split('/').filter(Boolean).at(-1) ?? '';
+  // path 形如 /resources/<folder>/<slug>，前缀由 content.config 的 prefix 注入
+  const segments = doc.path.split('/').filter(Boolean);
+  const slug = segments.at(-1) ?? '';
+  const folder = segments.length > 2 ? (segments[1] ?? '') : '';
   return {
     path: `/resources/${slug}`,
     title: doc.title ?? '',
+    folder,
     date: String(doc.date ?? ''),
     displayDate: formatDisplayDate(doc.date),
     categories: toArray(doc.categories),

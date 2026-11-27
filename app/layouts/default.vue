@@ -113,10 +113,14 @@ onMounted(() => window.addEventListener('keydown', onKeydown));
             :key="item.to"
             :to="item.to"
             :exact="item.exact"
-            :prepend-icon="item.icon"
             :title="item.label"
             @click="closeSidebarOnMobile"
-          />
+          >
+            <!-- 用 @nuxt/icon 渲染：vuetify.icons=false 时 prepend-icon 解析不了 mdi 名 -->
+            <template #prepend>
+              <Icon :name="item.icon" size="20" class="app-sidebar__icon" aria-hidden="true" />
+            </template>
+          </VListItem>
         </VList>
       </div>
     </VNavigationDrawer>
@@ -199,6 +203,10 @@ html:not(.js) .app-topbar__search-fallback {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(var(--v-theme-on-surface), 0.5);
+}
+.app-sidebar__icon {
+  flex-shrink: 0;
+  color: rgba(var(--v-theme-on-surface), 0.72);
 }
 
 // 顶栏按钮涟漪：Vuetify 默认取 currentColor（随主题明暗），透明度算式为

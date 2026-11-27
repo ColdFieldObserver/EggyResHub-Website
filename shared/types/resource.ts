@@ -3,6 +3,8 @@ export interface Resource {
   /** 详情页路径，形如 /resources/<slug> */
   path: string;
   title: string;
+  /** 所属文件夹（content/<folder>/ 的第一层目录名），分类页三层结构的第一层 */
+  folder: string;
   /** 原始日期字符串（YYYY-MM-DD HH:mm:ss），统一按 UTC 解释 */
   date: string;
   /** 格式化后的展示日期 */

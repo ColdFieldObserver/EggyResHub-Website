@@ -6,9 +6,9 @@
 // 本文件同时被 nuxt.config.ts（Vite）与 scripts/*.mjs（Node）直接 import，
 // 因此内部相对导入一律带显式 .ts 扩展名（Node ESM 不补扩展名）。
 //
-// 内容组织：content/ 下可任意层级存放 .md，文件夹只是存放方式，不是分区；
-// 分类完全由 frontmatter 的 categories 字段决定，对外详情页统一为
-// /resources/<slug>。
+// 内容组织：按 content/<folder>/<slug>.md 存放；文件夹是分类页第一层（分区），
+// 分类页统一为 文件夹 → 分类 → 文章 三层；分类/标签来自 frontmatter，
+// 对外详情页统一为 /resources/<slug>。
 // ============================================================
 import fs from 'node:fs';
 import path from 'node:path';
@@ -53,9 +53,13 @@ export function listResources(): Resource[] {
   const list = markdownFiles().map(({ file, slug }) => {
     const { data } = matter(fs.readFileSync(file, 'utf-8'));
     const cover = typeof data.cover === 'string' && data.cover.trim() ? data.cover : DEFAULT_COVER;
+    // content/<folder>/<slug>.md → folder 取相对 CONTENT_DIR 的第一段
+    const relParts = path.relative(CONTENT_DIR, file).split(path.sep);
+    const folder = relParts.length > 1 ? (relParts[0] ?? '') : '';
     return {
       path: `/resources/${slug}`,
       title: String(data.title ?? slug),
+      folder,
       date: String(data.date ?? ''),
       displayDate: formatDisplayDate(data.date),
       categories: toArray(data.categories),
@@ -120,14 +124,36 @@ export function buildRoutes(): string[] {
     routes.push(`/api${resource.path}/index.json`);
   }
 
-  // 分类 / 标签页（含各自分页）
-  for (const field of ['categories', 'tags'] as const) {
-    for (const [name, count] of countByField(field)) {
-      const base = `/${field}/${termSlug(name)}`;
+  // 分类三层：文件夹 → 分类 → 文章（含分类分页）
+  const folderCats = new Map<string, Map<string, number>>();
+  for (const resource of resources) {
+    if (!resource.folder) continue;
+    let cats = folderCats.get(resource.folder);
+    if (!cats) {
+      cats = new Map<string, number>();
+      folderCats.set(resource.folder, cats);
+    }
+    for (const name of resource.categories) {
+      cats.set(name, (cats.get(name) ?? 0) + 1);
+    }
+  }
+  for (const [folder, cats] of folderCats) {
+    routes.push(`/categories/${folder}`);
+    for (const [name, count] of cats) {
+      const base = `/categories/${folder}/${termSlug(name)}`;
       routes.push(base);
       for (let page = 2; page <= totalPagesOf(count); page += 1) {
         routes.push(`${base}/page/${page}`);
       }
+    }
+  }
+
+  // 标签页（含各自分页）
+  for (const [name, count] of countByField('tags')) {
+    const base = `/tags/${termSlug(name)}`;
+    routes.push(base);
+    for (let page = 2; page <= totalPagesOf(count); page += 1) {
+      routes.push(`${base}/page/${page}`);
     }
   }
 

@@ -18,7 +18,7 @@ const sticky = computed(() => stickyResources(all.value));
     <!-- 顶部区块 -->
     <section class="home-top page-shell">
       <div class="home-heading reveal-item">
-        <h1>{{ SITE.brand }}</h1>
+        <h1 class="text-h4 font-weight-bold mb-1">{{ SITE.brand }}</h1>
         <p>{{ SITE.tagline }}</p>
       </div>
 
@@ -104,10 +104,6 @@ const sticky = computed(() => stickyResources(all.value));
 <style scoped lang="scss">
 .home-heading {
   padding: 8px 0 20px;
-  h1 {
-    font-size: 1.3rem;
-    font-weight: 700;
-  }
   p {
     margin-top: 4px;
     font-size: 0.9rem;

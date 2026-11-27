@@ -35,7 +35,7 @@ pnpm preview        # wrangler dev，按 Cloudflare 规则验收同一份产物
 
 ## 内容编写
 
-资源文档放在 `content/` 下任意层级（例如 `content/wallpapers/foo.md`），文件夹只是存放方式，不参与分类。分类与标签完全由 frontmatter 决定，详情页统一为 `/resources/<slug>`。frontmatter：
+资源文档按 `content/<folder>/<slug>.md` 存放：文件夹是分类页第一层，分类页统一为 文件夹 → 分类 → 文章 三层（`/categories/` → `/categories/<folder>` → `/categories/<folder>/<category>/`）。分类来自 frontmatter 的 `categories`（标签来自 `tags`），详情页统一为 `/resources/<slug>`。frontmatter：
 
 ```yaml
 ---

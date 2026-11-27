@@ -117,6 +117,22 @@
     gap: $card-gap;
   }
 
+  // 文章卡片网格：桌面固定 3 列（侧栏开合都封顶 3），平板 2 列、手机 1 列。
+  // 用固定列数而不是 auto-fill：auto-fill 会随侧栏收起后的可用宽度继续加列。
+  .card-grid.post-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @media (max-width: $breakpoint-lg) {
+    .card-grid.post-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 600px) {
+    .card-grid.post-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
   // 友情链接 / 社区推广：一行最多 4 项
   .link-grid {
     display: grid;

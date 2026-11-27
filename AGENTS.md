@@ -55,7 +55,7 @@ pnpm format:check        # 只检查不写入（CI 用）
 - 站内链接一律 `<NuxtLink :to>`，严禁裸 `<a href>` 指向站内路由；站外链接 `target="_blank" rel="noopener noreferrer"`（正文由 `rehype-external-links.ts` 构建期处理）。
 - 内容 frontmatter：`title / date / categories / tags / description / stickypost / cover`；字段类型在 `content.config.ts` 用 zod 声明，**新增字段先改 schema**。
 - `date` 按字符串接收，须经 `shared/utils/date.ts` 的 UTC 解析，避免构建机时区漂移。
-- 资源文档放在 `content/` 下任意层级（文件夹只是存放方式，不是分区）；分类完全由 frontmatter 的 `categories` 决定，详情页统一为 `/resources/<slug>`。
+- 资源文档按 `content/<folder>/<slug>.md` 存放：文件夹是分类页第一层，分类页统一为 文件夹 → 分类 → 文章 三层（`/categories/` → `/categories/<folder>` → `/categories/<folder>/<category>/`）；分类来自 frontmatter 的 `categories`，详情页统一为 `/resources/<slug>`。
 - 数据链路：`server/routes/api/*.json.ts` 在构建期生成静态 JSON，前端 composable 读取；**不要在组件里直接 `queryCollection`**（预渲染阶段拿不到请求上下文）。文件命名用 `<dir>/index.json.ts`，不要 `[slug].json.ts`。
 
 ### 字体与图标

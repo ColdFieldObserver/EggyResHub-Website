@@ -2,10 +2,10 @@ import { defineCollection, defineContentConfig, z } from '@nuxt/content';
 
 // ============================================================
 // 内容集合：资源文档
-//   - 源文件在 content/ 下任意层级（文件夹只是存放方式，不是分区）
+//   - 源文件按 content/<folder>/<slug>.md 存放：文件夹是分类页第一层（分区）
 //   - source 加 prefix '/resources'：文档 path 形如 /resources/<folder>/<slug>
 //   - 对外详情页统一扁平化为 /resources/<slug>（见 shared/utils/content.ts）
-//   - 分类 / 标签完全来自 frontmatter 字段，由前端过滤生成列表页
+//   - 分类页统一为 文件夹 → 分类 → 文章 三层；分类/标签来自 frontmatter 字段
 // ============================================================
 export default defineContentConfig({
   collections: {

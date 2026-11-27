@@ -2,6 +2,7 @@ import { computed, type ComputedRef, type Ref } from 'vue';
 import { PAGE_SIZE } from '#shared/site';
 import { toArray } from '#shared/utils/content';
 import type { Resource } from '#shared/types/resource';
+import { folderDescription, folderIcon, folderLabel } from '~/data/folders';
 
 // ============================================================
 // 资源数据访问
@@ -101,13 +102,78 @@ export function filterByTerm(
   );
 }
 
-/** 分类详情页：URL 里的 name 就是 frontmatter 里的分类名。 */
-export function useCategoryView(name: () => string) {
+/** 分类页首层：按文件夹（content/<folder>/）聚合资源数与分类数，按资源数倒序。 */
+export interface FolderItem {
+  folder: string;
+  label: string;
+  icon: string;
+  description: string;
+  count: number;
+  categoryCount: number;
+  path: string;
+}
+
+export function listFolders(posts: Resource[]): FolderItem[] {
+  const map = new Map<string, { count: number; cats: Set<string> }>();
+  for (const post of posts) {
+    if (!post.folder) continue;
+    let entry = map.get(post.folder);
+    if (!entry) {
+      entry = { count: 0, cats: new Set<string>() };
+      map.set(post.folder, entry);
+    }
+    entry.count += 1;
+    for (const name of post.categories) entry.cats.add(name);
+  }
+  return [...map.entries()]
+    .map(([folder, { count, cats }]) => ({
+      folder,
+      label: folderLabel(folder),
+      icon: folderIcon(folder),
+      description: folderDescription(folder),
+      count,
+      categoryCount: cats.size,
+      path: `/categories/${folder}`,
+    }))
+    .sort((a, b) => b.count - a.count || a.folder.localeCompare(b.folder));
+}
+
+/** 分类页第二层：某个文件夹下的分类集合（按资源数倒序）。 */
+export function collectTermsInFolder(posts: Resource[], folder: string): TermItem[] {
+  const counter = new Map<string, number>();
+  for (const post of posts) {
+    if (post.folder !== folder) continue;
+    for (const name of post.categories) {
+      counter.set(name, (counter.get(name) ?? 0) + 1);
+    }
+  }
+  return [...counter.entries()]
+    .map(([name, count]) => ({
+      name,
+      count,
+      path: `/categories/${folder}/${encodeURIComponent(name)}`,
+    }))
+    .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+}
+
+/** 分类页第三层：文件夹 + 分类双重过滤。 */
+export function filterByFolderCategory(
+  posts: Resource[],
+  folder: string,
+  category: string,
+): Resource[] {
+  return posts.filter(
+    (post) => post.folder === folder && toArray(post.categories).includes(category),
+  );
+}
+
+/** 分类详情页（三层）：文件夹 + 分类。 */
+export function useCategoryView(folder: () => string, category: () => string) {
   const all = useAllResources();
 
-  const title = computed(() => `分类：${name()}`);
+  const title = computed(() => `${folderLabel(folder())} · ${category()}`);
   const summary = computed(() => '该分类下的资源');
-  const source = () => pinnedFirst(filterByTerm(all.value, 'categories', name()));
+  const source = () => pinnedFirst(filterByFolderCategory(all.value, folder(), category()));
 
   return { title, summary, source };
 }

@@ -11,8 +11,11 @@ const props = withDefaults(
     source: () => Resource[];
     page?: number;
     basePath?: string;
+    /** 可选：标题上方的返回链接（分类三层里回到上一层） */
+    backTo?: string;
+    backLabel?: string;
   }>(),
-  { page: 1, basePath: '/resources' },
+  { page: 1, basePath: '/resources', backTo: '', backLabel: '返回' },
 );
 
 const all = useAllResources();
@@ -34,6 +37,17 @@ const showPager = computed(() => totalPages.value > 1);
 <template>
   <div class="page-shell">
     <header class="reveal-item">
+      <VBtn
+        v-if="props.backTo"
+        :to="props.backTo"
+        variant="text"
+        density="comfortable"
+        size="small"
+        class="mb-2"
+      >
+        <Icon name="mdi:chevron-left" size="20" class="mr-1" aria-hidden="true" />
+        {{ props.backLabel }}
+      </VBtn>
       <h1 class="text-h4 font-weight-bold mb-1">{{ props.title }}</h1>
       <p v-if="props.summary" class="muted-text text-body-2">
         {{ props.summary }} · 共 {{ props.source().length }} 个资源 · 第 {{ page }} /
@@ -41,7 +55,7 @@ const showPager = computed(() => totalPages.value > 1);
       </p>
     </header>
 
-    <div v-if="pageResources.length" class="card-grid mt-6 reveal-item">
+    <div v-if="pageResources.length" class="card-grid post-grid mt-6 reveal-item">
       <ResourceCard v-for="resource in pageResources" :key="resource.path" :resource="resource" />
     </div>
     <p v-else class="muted-text mt-6">暂无资源。</p>
