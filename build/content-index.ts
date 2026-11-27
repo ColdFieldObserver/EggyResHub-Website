@@ -102,18 +102,18 @@ export function buildRoutes(): string[] {
   const resources = listResources();
   const routes = [
     '/',
-    '/resources/',
-    '/categories/',
-    '/tags/',
+    '/resources',
+    '/categories',
+    '/tags',
     '/links',
     '/community',
     '/search/',
-    '/404.html',
+    '/404',
     '/api/catalog.json',
     '/api/search.json',
   ];
 
-  // 全部资源分页（第 1 页就是 /resources/）
+  // 全部资源分页（第 1 页就是 /resources）
   for (let page = 2; page <= totalPagesOf(resources.length); page += 1) {
     routes.push(`/resources/page/${page}`);
   }
@@ -165,7 +165,7 @@ export function buildSitemapRoutes(): string[] {
   return buildRoutes().filter(
     (route) =>
       route !== '/search/' &&
-      route !== '/404.html' &&
+      route !== '/404' &&
       !route.startsWith('/api/') &&
       !/\.(xml|json)$/.test(route),
   );

@@ -45,7 +45,7 @@ const sticky = computed(() => stickyResources(all.value));
             <p v-if="!latest.length" class="muted-text text-body-2">暂无资源</p>
           </div>
           <VBtn
-            to="/resources/"
+            to="/resources"
             variant="tonal"
             color="primary"
             block

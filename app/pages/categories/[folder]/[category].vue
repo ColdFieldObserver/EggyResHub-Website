@@ -13,19 +13,16 @@ const { title, summary, source } = useCategoryView(folder, category);
 </script>
 
 <template>
-  <!-- 与分页子路由同为父子关系，补同名过渡保证切换有动画 -->
-  <Transition name="page" mode="out-in">
-    <NuxtPage v-if="isPageRoute" :key="route.fullPath" />
-    <ResourceListView
-      v-else
-      :key="route.fullPath"
-      :title="title"
-      :summary="summary"
-      :source="source"
-      :page="1"
-      :base-path="`/categories/${folder()}/${encodeURIComponent(category())}`"
-      :back-to="`/categories/${folder()}`"
-      :back-label="`返回 ${folderLabel(folder())}`"
-    />
-  </Transition>
+  <NuxtPage v-if="isPageRoute" :key="route.fullPath" />
+  <ResourceListView
+    v-else
+    :key="route.fullPath"
+    :title="title"
+    :summary="summary"
+    :source="source"
+    :page="1"
+    :base-path="`/categories/${folder()}/${encodeURIComponent(category())}`"
+    :back-to="`/categories/${folder()}`"
+    :back-label="`返回 ${folderLabel(folder())}`"
+  />
 </template>

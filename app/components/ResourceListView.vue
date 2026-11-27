@@ -26,10 +26,10 @@ const { totalPages, page, pageResources } = usePagedResources(
   () => props.source(),
 );
 
-/** 分页链接：第 1 页回 basePath，其余 /basePath/page/n */
+/** 分页链接统一使用无尾斜杠路径。 */
 function pageHref(n: number): string {
   const base = props.basePath.replace(/\/$/, '');
-  return n <= 1 ? `${base}/` : `${base}/page/${n}`;
+  return n <= 1 ? base : `${base}/page/${n}`;
 }
 const showPager = computed(() => totalPages.value > 1);
 </script>

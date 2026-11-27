@@ -48,11 +48,6 @@ const props = withDefaults(defineProps<{ resource: Resource; compact?: boolean }
   flex-direction: column;
   height: 100%;
   overflow: hidden;
-  transition: box-shadow $transition-fast ease;
-
-  &:hover {
-    box-shadow: 0 6px 18px rgba(var(--v-theme-on-surface), 0.08);
-  }
 }
 .resource-card__cover {
   flex-shrink: 0;

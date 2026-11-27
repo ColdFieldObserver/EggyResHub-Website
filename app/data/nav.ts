@@ -11,9 +11,9 @@ export interface NavItem {
 
 export const MAIN_NAV: NavItem[] = [
   { label: '首页', to: '/', icon: 'mdi:home', exact: true },
-  { label: '全部资源', to: '/resources/', icon: 'mdi:view-grid' },
-  { label: '资源分类', to: '/categories/', icon: 'mdi:folder-multiple' },
-  { label: '资源标签', to: '/tags/', icon: 'mdi:tag-multiple' },
+  { label: '全部资源', to: '/resources', icon: 'mdi:view-grid' },
+  { label: '资源分类', to: '/categories', icon: 'mdi:folder-multiple' },
+  { label: '资源标签', to: '/tags', icon: 'mdi:tag-multiple' },
   { label: '友情链接', to: '/links', icon: 'mdi:link-variant' },
   { label: '社区推广', to: '/community', icon: 'mdi:account-group' },
 ];
