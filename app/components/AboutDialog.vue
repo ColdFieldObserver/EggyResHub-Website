@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // 「关于」对话框：简介、技术栈、联系方式、版权声明、开源声明。
 import { ref } from 'vue';
-import { ABOUT } from '~/data/about';
+import { ABOUT_INTRO, ABOUT_ITEMS } from '~/data/about';
 import { SITE } from '#shared/site';
 
 const open = ref(false);
@@ -18,21 +18,14 @@ defineExpose({ open: () => (open.value = true) });
         </VBtn>
       </VCardTitle>
       <VCardText class="px-5 pb-5">
-        <p class="text-body-1 mb-5">{{ ABOUT.intro }}</p>
-
-        <h3 class="about-h">技术栈</h3>
-        <ul class="about-list">
-          <li v-for="item in ABOUT.stack" :key="item">{{ item }}</li>
-        </ul>
-
-        <h3 class="about-h">联系方式</h3>
-        <p class="text-body-2 mb-4">{{ ABOUT.contact }}</p>
-
-        <h3 class="about-h">版权声明</h3>
-        <p class="text-body-2 mb-4">{{ ABOUT.copyright }}</p>
-
-        <h3 class="about-h">开源声明</h3>
-        <p class="text-body-2">{{ ABOUT.opensource }}</p>
+        <p class="text-body-1 mb-5">{{ ABOUT_INTRO }}</p>
+        <div v-for="item in ABOUT_ITEMS">
+          <h3 class="about-h">{{ item.title }}</h3>
+          <p v-if="typeof item.content === 'string'" class="text-body-2 mb-4">{{ item.content }}</p>
+          <ul v-if="Array.isArray(item.content)" class="about-list">
+            <li v-for="text in item.content">{{ text }}</li>
+          </ul>
+        </div>
       </VCardText>
     </VCard>
   </VDialog>
