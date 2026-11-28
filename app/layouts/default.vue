@@ -206,6 +206,7 @@ html:not(.js) .app-topbar__search-fallback {
 }
 .app-sidebar__icon {
   flex-shrink: 0;
+  margin-right: 12px;
   color: rgba(var(--v-theme-on-surface), 0.72);
 }
 

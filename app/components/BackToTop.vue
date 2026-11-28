@@ -34,7 +34,10 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll));
       title="返回顶部"
       @click="toTop"
     >
-      <Icon name="mdi:arrow-up" size="22" aria-hidden="true" />
+      <!-- 给图标补一层背景，防止按钮在底下为复杂背景（如图片背景）的时候看不清 -->
+      <div class="back-to-top__icon">
+        <Icon name="mdi:arrow-up" size="22" aria-hidden="true" />
+      </div>
     </VBtn>
   </Transition>
 </template>
@@ -45,6 +48,14 @@ onBeforeUnmount(() => window.removeEventListener('scroll', onScroll));
   right: 24px;
   bottom: 24px;
   z-index: 100;
+}
+.back-to-top__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(var(--v-theme-surface), 0.92);
 }
 .back-to-top-enter-active,
 .back-to-top-leave-active {

@@ -73,11 +73,7 @@
     overflow: hidden;
     border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
     border-radius: $radius-md;
-    transition: box-shadow $transition-normal ease;
-
-    &:hover {
-      box-shadow: 0 8px 28px rgb(0 0 0 / 0.12);
-    }
+    transition: $transition-normal ease;
   }
 
   html.dark .resource-card:hover {

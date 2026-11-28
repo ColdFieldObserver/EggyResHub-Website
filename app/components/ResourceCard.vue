@@ -52,11 +52,9 @@ const props = withDefaults(defineProps<{ resource: Resource; compact?: boolean }
 .resource-card__cover {
   flex-shrink: 0;
   width: 100%;
-  // 封面统一固定 16:9：不随原始图片比例变化，卡片高度因此一致
-  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
-// 正文区：自上而下排列、贴顶对齐（与 PidanUI 官网 PostCard 一致）
+// 正文区：自上而下排列、贴顶对齐
 .resource-card__body {
   display: flex;
   flex: 1 1 auto;

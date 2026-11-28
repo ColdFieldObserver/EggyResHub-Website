@@ -108,7 +108,7 @@ export function buildRoutes(): string[] {
     '/links',
     '/community',
     '/search/',
-    '/404',
+    '/404.html',
     '/api/catalog.json',
     '/api/search.json',
   ];
