@@ -50,8 +50,10 @@ const props = withDefaults(defineProps<{ resource: Resource; compact?: boolean }
   overflow: hidden;
 }
 .resource-card__cover {
+  position: relative;
   flex-shrink: 0;
   width: 100%;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
 }
 // 正文区：自上而下排列、贴顶对齐

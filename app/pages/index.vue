@@ -58,6 +58,21 @@ const sticky = computed(() => stickyResources(all.value));
       </div>
     </section>
 
+    <!-- 中一区块：站点公告 -->
+    <section class="page-shell">
+      <h2 class="section-heading reveal-item">
+        <Icon name="mdi:bullhorn-outline" size="24" aria-hidden="true" />
+        站点公告
+      </h2>
+      <VAlert variant="tonal" color="primary" class="reveal-item announcement-alert">
+        <template #prepend>
+          <Icon name="mdi:information-outline" size="20" aria-hidden="true" />
+        </template>
+        <p>本站已于 2024 年 6 月 1 日正式上线，欢迎大家访问和使用！</p>
+        <p>后续将持续更新更多优质资源和实用技巧，敬请期待。</p>
+      </VAlert>
+    </section> 
+
     <!-- 中部区块：蛋仔小技巧 -->
     <section class="page-shell">
       <h2 class="section-heading reveal-item">
@@ -76,39 +91,21 @@ const sticky = computed(() => stickyResources(all.value));
         </div>
       </div>
     </section>
-
-    <!-- 下部区块：社交链接 -->
-    <section class="page-shell">
-      <h2 class="section-heading reveal-item">
-        <Icon name="mdi:link-variant" size="24" aria-hidden="true" />
-        社交链接
-      </h2>
-      <div class="home-social reveal-item">
-        <a
-          v-for="link in SOCIAL_LINKS"
-          :key="link.label"
-          :href="link.href"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="home-social__item"
-          :aria-label="link.label"
-        >
-          <Icon :name="link.icon" size="22" aria-hidden="true" />
-          <span>{{ link.label }}</span>
-        </a>
-      </div>
-    </section>
   </div>
 </template>
 
 <style scoped lang="scss">
 .home-heading {
   padding: 8px 0 20px;
+  text-align: center;
   p {
     margin-top: 4px;
     font-size: 0.9rem;
     color: rgba(var(--v-theme-on-surface), 0.6);
   }
+}
+.announcement-alert :deep(.v-alert__prepend) {
+  align-self: flex-start;
 }
 .home-top__grid {
   // 轮播与最新资源共用一个高度：内容超出时由最新资源面板内部滚动，

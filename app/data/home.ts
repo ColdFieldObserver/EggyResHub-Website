@@ -23,16 +23,3 @@ export const HOME_TIPS: Tip[] = [
     description: '挂件类资源的轮播图建议放独立文件夹动态读取，换图不必重新打包程序。',
   },
 ];
-
-export interface SocialLink {
-  label: string;
-  icon: string;
-  href: string;
-}
-
-// 首页下部区块：社交链接。
-export const SOCIAL_LINKS: SocialLink[] = [
-  { label: 'GitHub', icon: 'simple-icons:github', href: 'https://github.com' },
-  { label: 'Bilibili', icon: 'simple-icons:bilibili', href: 'https://www.bilibili.com' },
-  { label: 'QQ', icon: 'simple-icons:tencentqq', href: 'https://im.qq.com' },
-];
