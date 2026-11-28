@@ -13,3 +13,6 @@ public/
 
 # 生成的静态 JSON / 字体 / 地图
 *.lock
+
+# README
+README.md

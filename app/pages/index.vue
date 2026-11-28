@@ -71,7 +71,7 @@ const sticky = computed(() => stickyResources(all.value));
         <p>本站已于 2024 年 6 月 1 日正式上线，欢迎大家访问和使用！</p>
         <p>后续将持续更新更多优质资源和实用技巧，敬请期待。</p>
       </VAlert>
-    </section> 
+    </section>
 
     <!-- 中部区块：蛋仔小技巧 -->
     <section class="page-shell">
