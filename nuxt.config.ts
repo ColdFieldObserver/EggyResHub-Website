@@ -134,19 +134,34 @@ export default defineNuxtConfig({
         // 会覆盖 .v-theme--dark 自带的 color-scheme，导致同样的错配。
         // storage key 与 useSiteTheme.ts 保持一致。
         {
-          innerHTML:
-            `try{var m=localStorage.getItem("${THEME_STORAGE_KEY}")||"auto";` +
-            'var d=m==="dark"||(m==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);' +
-            'var r=document.documentElement;r.setAttribute("data-theme",m);' +
-            'r.classList.toggle("dark",d);r.classList.toggle("light",!d);' +
-            'r.classList.toggle("v-theme--dark",d);r.classList.toggle("v-theme--light",!d)' +
-            '}catch(e){var r=document.documentElement;r.setAttribute("data-theme","auto");r.classList.add("light","v-theme--light")}',
+          innerHTML: `
+try {
+  const mode = localStorage.getItem("${THEME_STORAGE_KEY}") || "auto";
+  const isDark = mode === "dark" ||
+    (mode === "auto" && matchMedia("(prefers-color-scheme: dark)").matches);
+  const root = document.documentElement;
+  root.setAttribute("data-theme", mode);
+  root.classList.toggle("dark", isDark);
+  root.classList.toggle("light", !isDark);
+  root.classList.toggle("v-theme--dark", isDark);
+  root.classList.toggle("v-theme--light", !isDark);
+} catch {
+  const root = document.documentElement;
+  root.setAttribute("data-theme", "auto");
+  root.classList.add("light", "v-theme--light");
+}
+`,
           tagPriority: 'critical',
         },
         // 首帧同步脚本：DOM 解析时立即给 <html> 加 .js。
         // 禁用 JS 时此脚本不执行，所有 html:not(.js) 的降级 CSS 规则自动生效。
         {
           innerHTML: 'document.documentElement.classList.add("js");',
+          tagPriority: 'critical',
+        },
+        // 浏览器检测脚本
+        {
+          src: '/_support/detect-browser-version.js',
           tagPriority: 'critical',
         },
       ],
