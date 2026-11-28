@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { buildRoutes } from './build/content-index.ts';
 import { rehypeExternalLinksBlank } from './build/rehype-external-links.ts';
 import { SITE, THEME_STORAGE_KEY } from './shared/site.ts';
+import { SVG_MODE_ICONS } from './shared/icons.ts';
 
 // ============================================================
 // 蛋仔资源站 · Nuxt 站点配置
@@ -177,51 +178,7 @@ export default defineNuxtConfig({
       scan: true,
       sizeLimitKb: 256,
       // scan 认不出动态绑定的图标（:name="item.icon"），必须显式列出。
-      icons: [
-        'mdi:home',
-        'mdi:home-outline',
-        'mdi:view-grid',
-        'mdi:view-grid-outline',
-        'mdi:folder-multiple',
-        'mdi:folder-multiple-outline',
-        'mdi:folder-outline',
-        'mdi:widgets-outline',
-        'mdi:book-open-variant',
-        'mdi:tag-multiple',
-        'mdi:tag-multiple-outline',
-        'mdi:link-variant',
-        'mdi:account-group',
-        'mdi:account-group-outline',
-        'mdi:menu',
-        'mdi:menu-open',
-        'mdi:magnify',
-        'mdi:close',
-        'mdi:chevron-left',
-        'mdi:chevron-right',
-        'mdi:chevron-down',
-        'mdi:information-outline',
-        'mdi:white-balance-sunny',
-        'mdi:weather-night',
-        'mdi:theme-light-dark',
-        'mdi:calendar-blank',
-        'mdi:text-box-outline',
-        'mdi:open-in-new',
-        'mdi:arrow-right',
-        'mdi:arrow-up',
-        'mdi:lightbulb-outline',
-        'mdi:palette-outline',
-        'mdi:tools',
-        'mdi:image-outline',
-        'mdi:content-copy',
-        'mdi:check',
-        'mdi:github',
-        'mdi:web',
-        'mdi:rss',
-        'simple-icons:github',
-        'simple-icons:bilibili',
-        'simple-icons:tencentqq',
-        'simple-icons:windows',
-      ],
+      icons: SVG_MODE_ICONS,
     },
   },
 

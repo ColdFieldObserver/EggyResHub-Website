@@ -14,39 +14,43 @@ const folderCount = computed(() => all.value.filter((item) => item.folder === fo
 </script>
 
 <template>
-  <NuxtPage v-if="isCategoryRoute" :key="route.fullPath" />
-  <div v-else :key="`folder-${folder}`" class="page-shell">
-    <header class="reveal-item">
-      <VBtn to="/categories" variant="text" density="comfortable" size="small" class="mb-2">
-        <Icon name="mdi:chevron-left" size="20" class="mr-1" aria-hidden="true" />
-        返回文件夹
-      </VBtn>
-      <h1 class="text-h4 font-weight-bold mb-1">{{ folderLabel(folder) }}</h1>
-      <p class="muted-text text-body-2">
-        {{ folderDescription(folder) }}
-        <template v-if="folderDescription(folder)"> · </template>共 {{ terms.length }} 个分类 ·
-        {{ folderCount }} 个资源
-      </p>
-    </header>
+  <div>
+    <NuxtPage v-if="isCategoryRoute" :page-key="route.fullPath" />
+    <Transition name="page">
+      <div v-if="!isCategoryRoute" :key="`folder-${folder}`" class="page-shell">
+        <header class="reveal-item">
+          <VBtn to="/categories" variant="text" density="comfortable" size="small" class="mb-2">
+            <Icon name="mdi:chevron-left" size="20" class="mr-1" aria-hidden="true" />
+            返回文件夹
+          </VBtn>
+          <h1 class="text-h4 font-weight-bold mb-1">{{ folderLabel(folder) }}</h1>
+          <p class="muted-text text-body-2">
+            {{ folderDescription(folder) }}
+            <template v-if="folderDescription(folder)"> · </template>共 {{ terms.length }} 个分类 ·
+            {{ folderCount }} 个资源
+          </p>
+        </header>
 
-    <div class="term-grid reveal-item">
-      <VCard
-        v-for="term in terms"
-        :key="term.name"
-        :to="term.path"
-        link
-        ripple
-        variant="outlined"
-        class="term-card"
-      >
-        <div class="term-card__inner">
-          <Icon name="mdi:folder-multiple-outline" size="24" aria-hidden="true" />
-          <span class="term-card__name">{{ term.name }}</span>
-          <span class="term-card__count">{{ term.count }} 个资源</span>
+        <div class="term-grid reveal-item">
+          <VCard
+            v-for="term in terms"
+            :key="term.name"
+            :to="term.path"
+            link
+            ripple
+            variant="outlined"
+            class="term-card"
+          >
+            <div class="term-card__inner">
+              <Icon name="mdi:folder-multiple-outline" size="24" aria-hidden="true" />
+              <span class="term-card__name">{{ term.name }}</span>
+              <span class="term-card__count">{{ term.count }} 个资源</span>
+            </div>
+          </VCard>
         </div>
-      </VCard>
-    </div>
-    <p v-if="!terms.length" class="muted-text mt-6">该文件夹下暂无分类。</p>
+        <p v-if="!terms.length" class="muted-text mt-6">该文件夹下暂无分类。</p>
+      </div>
+    </Transition>
   </div>
 </template>
 
